@@ -1,5 +1,7 @@
 package com.example.concerto.pojo;
 
+import java.util.Date;
+
 /**
  * @author sarise
  * @version 1.0
@@ -9,8 +11,8 @@ public class Project {
     Long projectId ;
     String projectName ;
     String projectDescription;
-    String projectStartTime;
-    String projectEndTime;
+    Date projectStartTime;
+    Date projectEndTime;
 
     public Long getProjectId() {
         return projectId;
@@ -36,19 +38,19 @@ public class Project {
         this.projectDescription = projectDescription;
     }
 
-    public String getProjectStartTime() {
+    public Date getProjectStartTime() {
         return projectStartTime;
     }
 
-    public void setProjectStartTime(String projectStartTime) {
+    public void setProjectStartTime(Date projectStartTime) {
         this.projectStartTime = projectStartTime;
     }
 
-    public String getProjectEndTime() {
+    public Date getProjectEndTime() {
         return projectEndTime;
     }
 
-    public void setProjectEndTime(String projectEndTime) {
+    public void setProjectEndTime(Date projectEndTime) {
         this.projectEndTime = projectEndTime;
     }
 }

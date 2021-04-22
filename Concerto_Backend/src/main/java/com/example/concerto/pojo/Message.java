@@ -9,7 +9,7 @@ public class Message {
     Long message_id;
     Long user_id;
     String message_content;//  comment "进入项目成功\失败  用户管理的项目有新的申请"
-    Integer message_status;//   comment "已读\未读"
+    Integer message_status;//   comment "1已读\0未读"
 
     public Long getMessage_id() {
         return message_id;

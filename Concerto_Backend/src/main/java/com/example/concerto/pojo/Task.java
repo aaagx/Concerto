@@ -11,6 +11,7 @@ import java.util.Set;
  */
 public class Task {
     Long taskId ;
+    Long parentTaskId;
     String taskTitle ;//标题
     String taskType ; //里程碑 任务 子任务
     String taskPriority ;//非常紧急 紧急 普通
@@ -26,6 +27,15 @@ public class Task {
 
 
     //getter and setter
+
+    public Long getParentTaskId() {
+        return parentTaskId;
+    }
+
+    public void setParentTaskId(Long parentTaskId) {
+        this.parentTaskId = parentTaskId;
+    }
+
     public Set<Tag> getTags() {
         return tags;
     }

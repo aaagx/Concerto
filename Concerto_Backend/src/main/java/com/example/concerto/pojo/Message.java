@@ -6,40 +6,40 @@ package com.example.concerto.pojo;
  * @date 2021/4/20 下午7:40
  */
 public class Message {
-    Long message_id;
-    Long user_id;
-    String message_content;//  comment "进入项目成功\失败  用户管理的项目有新的申请"
-    Integer message_status;//   comment "已读\未读"
+    Long messageId;
+    Long userId;
+    String messageContent;//  comment "进入项目成功\失败  用户管理的项目有新的申请"
+    Integer messageStatus;//   comment "已读\未读"
 
-    public Long getMessage_id() {
-        return message_id;
+    public Long getMessageId() {
+        return messageId;
     }
 
-    public void setMessage_id(Long message_id) {
-        this.message_id = message_id;
+    public void setMessageId(Long messageId) {
+        this.messageId = messageId;
     }
 
-    public Long getUser_id() {
-        return user_id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
-    public String getMessage_content() {
-        return message_content;
+    public String getMessageContent() {
+        return messageContent;
     }
 
-    public void setMessage_content(String message_content) {
-        this.message_content = message_content;
+    public void setMessageContent(String messageContent) {
+        this.messageContent = messageContent;
     }
 
-    public Integer getMessage_status() {
-        return message_status;
+    public Integer getMessageStatus() {
+        return messageStatus;
     }
 
-    public void setMessage_status(Integer message_status) {
-        this.message_status = message_status;
+    public void setMessageStatus(Integer messageStatus) {
+        this.messageStatus = messageStatus;
     }
 }

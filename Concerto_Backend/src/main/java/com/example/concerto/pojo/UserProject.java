@@ -9,7 +9,7 @@ public class UserProject {
     Long user_project_id;
     Long user_id;
     Long project_id;
-    String user_role; //"成员 管理者 候选人" comment "加入项目 未通过准入则为候选人"
+    Integer user_role; //"0成员 1管理者 2候选人" comment "加入项目 未通过准入则为候选人"
 
     public Long getUser_project_id() {
         return user_project_id;
@@ -35,11 +35,11 @@ public class UserProject {
         this.project_id = project_id;
     }
 
-    public String getUser_role() {
+    public Integer getUser_role() {
         return user_role;
     }
 
-    public void setUser_role(String user_role) {
+    public void setUser_role(Integer user_role) {
         this.user_role = user_role;
     }
 }

@@ -21,4 +21,91 @@ public class TaskVersion {
     Date taskStartTime ;
     Date taskEndTime ;
 
+    public Long getTaskVersionId() {
+        return taskVersionId;
+    }
+
+    public void setTaskVersionId(Long taskVersionId) {
+        this.taskVersionId = taskVersionId;
+    }
+
+    public Long getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(Long taskId) {
+        this.taskId = taskId;
+    }
+
+    public String getTaskVersionDescription() {
+        return taskVersionDescription;
+    }
+
+    public void setTaskVersionDescription(String taskVersionDescription) {
+        this.taskVersionDescription = taskVersionDescription;
+    }
+
+    public Date getTaskVersionModifyTime() {
+        return taskVersionModifyTime;
+    }
+
+    public void setTaskVersionModifyTime(Date taskVersionModifyTime) {
+        this.taskVersionModifyTime = taskVersionModifyTime;
+    }
+
+    public Long getTaskVersionModifyUserId() {
+        return taskVersionModifyUserId;
+    }
+
+    public void setTaskVersionModifyUserId(Long taskVersionModifyUserId) {
+        this.taskVersionModifyUserId = taskVersionModifyUserId;
+    }
+
+    public Integer getTaskVersion() {
+        return taskVersion;
+    }
+
+    public void setTaskVersion(Integer taskVersion) {
+        this.taskVersion = taskVersion;
+    }
+
+    public String getTaskTitle() {
+        return taskTitle;
+    }
+
+    public void setTaskTitle(String taskTitle) {
+        this.taskTitle = taskTitle;
+    }
+
+    public String getTaskType() {
+        return taskType;
+    }
+
+    public void setTaskType(String taskType) {
+        this.taskType = taskType;
+    }
+
+    public String getTaskPriority() {
+        return taskPriority;
+    }
+
+    public void setTaskPriority(String taskPriority) {
+        this.taskPriority = taskPriority;
+    }
+
+    public Date getTaskStartTime() {
+        return taskStartTime;
+    }
+
+    public void setTaskStartTime(Date taskStartTime) {
+        this.taskStartTime = taskStartTime;
+    }
+
+    public Date getTaskEndTime() {
+        return taskEndTime;
+    }
+
+    public void setTaskEndTime(Date taskEndTime) {
+        this.taskEndTime = taskEndTime;
+    }
 }

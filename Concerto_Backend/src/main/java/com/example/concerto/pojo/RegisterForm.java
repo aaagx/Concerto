@@ -11,6 +11,15 @@ public class RegisterForm {
     private String email;
     private String captcha;
     private String password;
+    private String phone;
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public String getName() {
         return name;

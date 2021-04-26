@@ -3,6 +3,7 @@ package com.example.concerto.controller;
 import com.example.concerto.annotation.PassToken;
 import com.example.concerto.annotation.UserLoginToken;
 import com.example.concerto.exception.CustomException;
+import com.example.concerto.pojo.LoginForm;
 import com.example.concerto.pojo.Project;
 import com.example.concerto.pojo.RegisterForm;
 import com.example.concerto.pojo.User;
@@ -31,12 +32,21 @@ public class UserController {
     }
 
     @PassToken
-    @PostMapping("/User")
+    @PostMapping("/User/Register")
     public CommonResponse Register(@RequestBody RegisterForm registerForm)
     {
         userService.Register(registerForm);
 
         CommonResponse commonResponse=new CommonResponse(200,"ok",null);
+        return  commonResponse;
+    }
+
+    @PassToken
+    @PostMapping("/User/Login")
+    public CommonResponse Login(@RequestBody LoginForm loginForm)
+    {
+        String token=userService.login(loginForm);
+        CommonResponse commonResponse=new CommonResponse(200,"ok",token);
         return  commonResponse;
     }
 

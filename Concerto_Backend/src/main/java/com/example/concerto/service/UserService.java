@@ -1,5 +1,6 @@
 package com.example.concerto.service;
 
+import com.example.concerto.pojo.LoginForm;
 import com.example.concerto.pojo.RegisterForm;
 import com.example.concerto.pojo.User;
 
@@ -12,5 +13,8 @@ import com.example.concerto.pojo.User;
 public interface UserService {
 
     public void Register(RegisterForm user);
+
+    String login(LoginForm loginForm);
+
     public User getUserById(int id);
 }

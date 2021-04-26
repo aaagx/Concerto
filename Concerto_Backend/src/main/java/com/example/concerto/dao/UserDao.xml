@@ -8,15 +8,21 @@
     <select id="getUserById" resultType="User">
         select * from user where user_id = #{id}
     </select>
+    <select id="getUserByEmail" resultType="User">
+        select * from user where user_email = #{email}
+    </select>
     <select id="getUserNumByEmail" resultType="int">
         select count(*) from user where user_email = #{email}
     </select>
     <select id="getUserNumByName" resultType="int">
         select count(*) from user where user_name = #{name}
     </select>
+    <select id="getUserNumByPhone" resultType="int">
+        select count(*) from user where user_phone = #{phone}
+    </select>
     <insert id="insertUser" parameterType="User" useGeneratedKeys="true" keyProperty="userId" >
-        insert into user(user_phone,user_name,user_email,user_password,user_salt,user_introducton,user_token)
-         value (#{userPhone},#{userName},#{userEmail},#{userPassword},#{userSalt},#{userIntroducton},#{userToken})
+        insert into user(user_phone,user_name,user_email,user_password,user_salt,user_introducton)
+         value (#{userPhone},#{userName},#{userEmail},#{userPassword},#{userSalt},#{userIntroducton})
     </insert>
 
 </mapper>

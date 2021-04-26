@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.7.26, for macos10.14 (x86_64)
 --
--- Host: localhost    Database: test3
+-- Host: localhost    Database: test1
 -- ------------------------------------------------------
 -- Server version	5.7.26
 
@@ -193,7 +193,6 @@ CREATE TABLE `user` (
   `user_phone` varchar(11) NOT NULL,
   `user_introducton` varchar(100) DEFAULT NULL COMMENT '''个人介绍''',
   `user_salt` varchar(45) DEFAULT NULL,
-  `user_token` varchar(45) DEFAULT NULL COMMENT '''全局唯一 xx+user_id 加密''',
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `user_phone_UNIQUE` (`user_phone`),
   UNIQUE KEY `user_id_UNIQUE` (`user_id`),
@@ -251,6 +250,23 @@ CREATE TABLE `user_task` (
   KEY `task_id` (`task_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `user_token`
+--
+
+DROP TABLE IF EXISTS `user_token`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_token` (
+  `user_token_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL,
+  `user_token` varchar(300) NOT NULL DEFAULT '',
+  `validate_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`user_token_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -261,4 +277,4 @@ CREATE TABLE `user_task` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-24 17:41:21
+-- Dump completed on 2021-04-26 15:31:25

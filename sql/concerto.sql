@@ -50,23 +50,6 @@ CREATE TABLE `project` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `project_task`
---
-
-DROP TABLE IF EXISTS `project_task`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `project_task` (
-  `project_task_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `project_id` bigint(20) NOT NULL,
-  `task_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`project_task_id`),
-  KEY `project_id` (`project_id`),
-  KEY `task_id` (`task_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `tag`
 --
 
@@ -92,11 +75,13 @@ DROP TABLE IF EXISTS `task`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `task` (
   `task_id` bigint(20) NOT NULL,
+  `project_id` bigint(20) DEFAULT NULL,
   `parent_task_id` bigint(20) DEFAULT NULL,
   `task_status` int(11) NOT NULL DEFAULT '0' COMMENT '完成状态\\n0：未完成\\n1：已完成',
   `task_version` int(11) NOT NULL DEFAULT '0' COMMENT '版本号\\n',
   PRIMARY KEY (`task_id`),
-  KEY `parent_task_id` (`parent_task_id`)
+  KEY `parent_task_id` (`parent_task_id`),
+  KEY `project_id` (`project_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -170,7 +155,7 @@ CREATE TABLE `task_version` (
   `task_version` int(11) NOT NULL DEFAULT '0' COMMENT '版本号',
   `task_title` varchar(45) NOT NULL,
   `task_type` varchar(45) NOT NULL DEFAULT '0' COMMENT '0：任务 \n1：子任务 \n2：里程碑',
-  `task_priority` varchar(45) NOT NULL DEFAULT '0' COMMENT '0：普通\n1：有点紧急又不太紧急 \n2：紧急 \n\n',
+  `task_priority` varchar(45) NOT NULL DEFAULT '0' COMMENT '0：普通\\n1：有点紧急又不太紧急 \\n2：紧急 \\n\\n',
   `task_start_time` date NOT NULL,
   `task_end_time` date NOT NULL,
   PRIMARY KEY (`task_version_id`),
@@ -277,4 +262,4 @@ CREATE TABLE `user_token` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-26 15:31:25
+-- Dump completed on 2021-04-26 16:05:22

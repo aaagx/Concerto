@@ -19,7 +19,7 @@ public class Task {
     String taskStatus ; //完成状态
     Date taskStartTime ;
     Date taskEndTime ;
-    Long taskVersion ;
+    Integer taskVersion ;
 
     Set<Tag> tags;
     Set<User> participants;
@@ -134,11 +134,11 @@ public class Task {
         this.taskEndTime = taskEndTime;
     }
 
-    public Long getTaskVersion() {
+    public Integer getTaskVersion() {
         return taskVersion;
     }
 
-    public void setTaskVersion(Long taskVersion) {
+    public void setTaskVersion(Integer taskVersion) {
         this.taskVersion = taskVersion;
     }
 }

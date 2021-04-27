@@ -7,18 +7,9 @@ package com.example.concerto.pojo;
  */
 public class Tag {
     Long tagId;
-    Long taskId;
     String tagContent;
     String tagColor;
 
-
-    public Long getTaskId() {
-        return taskId;
-    }
-
-    public void setTaskId(Long taskId) {
-        this.taskId = taskId;
-    }
 
     public Long getTagId() {
         return tagId;

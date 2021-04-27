@@ -14,9 +14,9 @@ public class Task {
     Long parentTaskId;
     Long projectId;
     String taskTitle ;//标题
-    String taskType ; //里程碑 任务 子任务
-    String taskPriority ;//非常紧急 紧急 普通
-    String taskStatus ; //完成状态
+    Integer taskType ; //里程碑 任务 子任务
+    Integer taskPriority ;//非常紧急 紧急 普通
+    Integer taskStatus ; //完成状态
     Date taskStartTime ;
     Date taskEndTime ;
     Integer taskVersion ;
@@ -94,27 +94,27 @@ public class Task {
         this.taskTitle = taskTitle;
     }
 
-    public String getTaskType() {
+    public Integer getTaskType() {
         return taskType;
     }
 
-    public void setTaskType(String taskType) {
+    public void setTaskType(Integer taskType) {
         this.taskType = taskType;
     }
 
-    public String getTaskPriority() {
+    public Integer getTaskPriority() {
         return taskPriority;
     }
 
-    public void setTaskPriority(String taskPriority) {
+    public void setTaskPriority(Integer taskPriority) {
         this.taskPriority = taskPriority;
     }
 
-    public String getTaskStatus() {
+    public Integer getTaskStatus() {
         return taskStatus;
     }
 
-    public void setTaskStatus(String taskStatus) {
+    public void setTaskStatus(Integer taskStatus) {
         this.taskStatus = taskStatus;
     }
 

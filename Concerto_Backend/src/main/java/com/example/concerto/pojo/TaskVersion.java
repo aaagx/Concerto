@@ -16,8 +16,8 @@ public class TaskVersion {
 
     Integer taskVersion ;//任务版本
     String taskTitle ;//标题
-    String taskType ; //里程碑 任务 子任务
-    String taskPriority ;//非常紧急 紧急 普通
+    Integer taskType ; //里程碑 任务 子任务
+    Integer taskPriority ;//非常紧急 紧急 普通
     Date taskStartTime ;
     Date taskEndTime ;
 
@@ -77,19 +77,19 @@ public class TaskVersion {
         this.taskTitle = taskTitle;
     }
 
-    public String getTaskType() {
+    public Integer getTaskType() {
         return taskType;
     }
 
-    public void setTaskType(String taskType) {
+    public void setTaskType(Integer taskType) {
         this.taskType = taskType;
     }
 
-    public String getTaskPriority() {
+    public Integer getTaskPriority() {
         return taskPriority;
     }
 
-    public void setTaskPriority(String taskPriority) {
+    public void setTaskPriority(Integer taskPriority) {
         this.taskPriority = taskPriority;
     }
 

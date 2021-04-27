@@ -3,10 +3,10 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.concerto.dao.TeskDao">
+<mapper namespace="com.example.concerto.dao.TaskDao">
 
-    <select id="queryByKeyword" resultType="Paper">
-        select * from paper where title like CONCAT('%',#{keyword},'%') or abstractContent like CONCAT('%',#{keyword},'%')
-    </select>
+    <insert id="addTask" useGeneratedKeys="true" keyProperty="taskId">
+        insert into task values (NULL,#{projectId},#{parentTaskId},0,0)
+    </insert>
 
 </mapper>

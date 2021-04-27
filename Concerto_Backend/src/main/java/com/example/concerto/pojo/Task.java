@@ -11,13 +11,15 @@ import java.util.Set;
  */
 public class Task {
     Long taskId ;
+    Long parentTaskId;
+    Long projectId;
     String taskTitle ;//标题
     String taskType ; //里程碑 任务 子任务
     String taskPriority ;//非常紧急 紧急 普通
     String taskStatus ; //完成状态
     Date taskStartTime ;
     Date taskEndTime ;
-    Long taskVersion ;
+    Integer taskVersion ;
 
     Set<Tag> tags;
     Set<User> participants;
@@ -26,6 +28,24 @@ public class Task {
 
 
     //getter and setter
+
+
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
+    }
+
+    public Long getParentTaskId() {
+        return parentTaskId;
+    }
+
+    public void setParentTaskId(Long parentTaskId) {
+        this.parentTaskId = parentTaskId;
+    }
+
     public Set<Tag> getTags() {
         return tags;
     }
@@ -114,11 +134,11 @@ public class Task {
         this.taskEndTime = taskEndTime;
     }
 
-    public Long getTaskVersion() {
+    public Integer getTaskVersion() {
         return taskVersion;
     }
 
-    public void setTaskVersion(Long taskVersion) {
+    public void setTaskVersion(Integer taskVersion) {
         this.taskVersion = taskVersion;
     }
 }

@@ -13,8 +13,6 @@ public class User {
     String userPassword;
     String userSalt; //用于加密
     String userIntroducton; //用户介绍
-    String userToken;
-
 
 
     public Long getUserId() {
@@ -71,13 +69,5 @@ public class User {
 
     public void setUserIntroducton(String userIntroducton) {
         this.userIntroducton = userIntroducton;
-    }
-
-    public String getUserToken() {
-        return userToken;
-    }
-
-    public void setUserToken(String userToken) {
-        this.userToken = userToken;
     }
 }

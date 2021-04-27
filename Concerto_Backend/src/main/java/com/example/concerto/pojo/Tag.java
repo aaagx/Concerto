@@ -10,6 +10,7 @@ public class Tag {
     String tagContent;
     String tagColor;
 
+
     public Long getTagId() {
         return tagId;
     }

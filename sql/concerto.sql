@@ -58,12 +58,10 @@ DROP TABLE IF EXISTS `tag`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tag` (
   `tag_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `owner_task_id` bigint(20) NOT NULL,
   `tag_content` varchar(45) NOT NULL,
   `tag_color` varchar(45) NOT NULL DEFAULT '#f7f7f7',
-  PRIMARY KEY (`tag_id`),
-  KEY `owner_task_id` (`owner_task_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  PRIMARY KEY (`tag_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -74,7 +72,7 @@ DROP TABLE IF EXISTS `task`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `task` (
-  `task_id` bigint(20) NOT NULL,
+  `task_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `project_id` bigint(20) DEFAULT NULL,
   `parent_task_id` bigint(20) DEFAULT NULL,
   `task_status` int(11) NOT NULL DEFAULT '0' COMMENT '完成状态\\n0：未完成\\n1：已完成',
@@ -82,7 +80,7 @@ CREATE TABLE `task` (
   PRIMARY KEY (`task_id`),
   KEY `parent_task_id` (`parent_task_id`),
   KEY `project_id` (`project_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -118,6 +116,23 @@ CREATE TABLE `task_participant_operation` (
   `task_version` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`task_participant_operation_id`),
   KEY `idx_task_id` (`task_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `task_tag`
+--
+
+DROP TABLE IF EXISTS `task_tag`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `task_tag` (
+  `task_tag_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `task_id` bigint(20) NOT NULL,
+  `tag_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`task_tag_id`),
+  KEY `task_id` (`task_id`),
+  KEY `tag_id` (`tag_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -160,7 +175,7 @@ CREATE TABLE `task_version` (
   `task_end_time` date NOT NULL,
   PRIMARY KEY (`task_version_id`),
   KEY `idx_task_id_version` (`task_id`,`task_version`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -262,4 +277,4 @@ CREATE TABLE `user_token` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-26 16:05:22
+-- Dump completed on 2021-04-27  8:50:40

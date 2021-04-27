@@ -133,7 +133,7 @@ CREATE TABLE `task_tag` (
   PRIMARY KEY (`task_tag_id`),
   KEY `task_id` (`task_id`),
   KEY `tag_id` (`tag_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -169,8 +169,8 @@ CREATE TABLE `task_version` (
   `task_version_description` varchar(100) DEFAULT NULL COMMENT '提交修改的时候生成，描述任务修改信息',
   `task_version` int(11) NOT NULL DEFAULT '0' COMMENT '版本号',
   `task_title` varchar(45) NOT NULL,
-  `task_type` varchar(45) NOT NULL DEFAULT '0' COMMENT '0：任务 \n1：子任务 \n2：里程碑',
-  `task_priority` varchar(45) NOT NULL DEFAULT '0' COMMENT '0：普通\\n1：有点紧急又不太紧急 \\n2：紧急 \\n\\n',
+  `task_type` int(11) NOT NULL DEFAULT '0' COMMENT '0：任务 \\n1：子任务 \\n2：里程碑',
+  `task_priority` int(11) NOT NULL DEFAULT '0' COMMENT '0：普通\\n1：有点紧急又不太紧急 \\n2：紧急 \\n\\n',
   `task_start_time` date NOT NULL,
   `task_end_time` date NOT NULL,
   PRIMARY KEY (`task_version_id`),
@@ -277,4 +277,4 @@ CREATE TABLE `user_token` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-27 22:08:46
+-- Dump completed on 2021-04-27 23:18:00

@@ -12,6 +12,9 @@ import com.example.concerto.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
+
 /**
  * @ Author     ：aaagx.
  * @ Date       ：Created in 16:28 2021/4/25
@@ -33,11 +36,12 @@ public class UserController {
 
     @PassToken
     @PostMapping("/User/Register")
-    public CommonResponse Register(@RequestBody RegisterForm registerForm)
+    public CommonResponse Register(@RequestBody RegisterForm registerForm,HttpSession httpSession)
     {
-        userService.Register(registerForm);
+        userService.Register(registerForm,httpSession);
 
-        CommonResponse commonResponse=new CommonResponse(200,"ok",null);
+        CommonResponse commonResponse=new CommonResponse(200,"注册成功",null);
+
         return  commonResponse;
     }
 
@@ -46,8 +50,18 @@ public class UserController {
     public CommonResponse Login(@RequestBody LoginForm loginForm)
     {
         String token=userService.login(loginForm);
-        CommonResponse commonResponse=new CommonResponse(200,"ok",token);
+        CommonResponse commonResponse=new CommonResponse(200,"登陆成功",token);
         return  commonResponse;
     }
+
+    @PassToken
+    @GetMapping("/User/Captcha/{email}")
+    public CommonResponse getCaptcha(@PathVariable("email") String email, HttpSession httpSession)
+    {
+        userService.sentCaptcha(email,httpSession);
+        CommonResponse commonResponse=new CommonResponse(200,"验证码已经成功发出",null);
+        return  commonResponse;
+    }
+
 
 }

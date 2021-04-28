@@ -7,19 +7,11 @@ package com.example.concerto.pojo;
  */
 
 public class Userinfo {
-    Long userId;
     String userPhone;
     String userName;
     String userEmail;
     String userIntroducton; //用户介绍
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
 
     public String getUserPhone() {
         return userPhone;

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.concerto.dao.ProjectDao">
+
+    <insert id="insertProject" parameterType="Project" useGeneratedKeys="true" keyProperty="projectId" >
+        insert into project(PROJECT_NAME, PROJECT_DESCRIPTION, PROJECT_START_TIME, PROJECT_END_TIME)
+            value (#{projectName},#{projectDescription},#{projectStartTime},#{projectEndTime})
+    </insert>
+
+</mapper>

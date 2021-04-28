@@ -23,5 +23,8 @@ public interface UserService {
 
      Userinfo getUserInfo(HttpSession httpSession);
 
-     void sendCaptcha(String email, HttpSession session);
+
+    void updateUserInfo(Userinfo userinfo, HttpSession httpSession);
+
+    void sendCaptcha(String email, HttpSession session);
 }

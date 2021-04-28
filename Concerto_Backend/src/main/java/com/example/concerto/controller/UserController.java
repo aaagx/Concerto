@@ -39,6 +39,15 @@ public class UserController {
         return  commonResponse;
     }
 
+    @UserLoginToken
+    @PostMapping("/User/info")
+    public CommonResponse UpdateUserInfo(@RequestBody Userinfo userinfo, HttpSession httpSession)
+    {
+        userService.updateUserInfo(userinfo,httpSession);
+        CommonResponse commonResponse=new CommonResponse(200,"用户信息修改成功","");
+        return  commonResponse;
+    }
+
     @PassToken
     @PostMapping("/User/Register")
     public CommonResponse Register(@RequestBody RegisterForm registerForm,HttpSession httpSession)

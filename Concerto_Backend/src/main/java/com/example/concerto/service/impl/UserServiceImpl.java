@@ -8,6 +8,7 @@ import com.example.concerto.service.UserService;
 import com.example.concerto.utils.CaptchaUtils;
 import com.example.concerto.utils.FormUtils;
 import com.example.concerto.utils.TokenUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -53,7 +54,7 @@ public class UserServiceImpl implements UserService {
                 user.setUserPassword(registerForm.getPassword());
                 user.setUserEmail(registerForm.getEmail());
                 user.setUserSalt("001");
-                int insertId = userDao.insertUser(user);
+                long insertId = userDao.insertUser(user);
 
             }
             else {
@@ -111,21 +112,43 @@ public class UserServiceImpl implements UserService {
             User user=userDao.getUserById(UserId);
             if(user==null)
                 throw new CustomException(404,"找不到对应用户");
-            Userinfo userinfo=new Userinfo();
-            userinfo.setUserId(user.getUserId());
-            userinfo.setUserEmail(user.getUserEmail());
-            userinfo.setUserName(user.getUserName());
-            userinfo.setUserPhone(user.getUserIntroducton()!=null?user.getUserIntroducton():"");
-            userinfo.setUserIntroducton(user.getUserIntroducton()!=null?user.getUserIntroducton():"");
 
+            Userinfo userinfo=new Userinfo();
+            BeanUtils.copyProperties(user,userinfo);
+            userinfo.setUserPhone(user.getUserPhone()!=null?user.getUserPhone():"");
+            userinfo.setUserIntroducton(user.getUserIntroducton()!=null?user.getUserIntroducton():"");
             return userinfo;
         }
         catch (NullPointerException e)
         {
-            throw new CustomException(404,"未进行过登陆操作");
+            throw new CustomException(401,"未进行过登陆操作");
         }
     }
 
+    @Override
+    public void updateUserInfo(Userinfo userinfo, HttpSession httpSession){
+        try {
+            long UserId = (long) httpSession.getAttribute("UserId");
+            User user =new User();
+            BeanUtils.copyProperties(userinfo,user);
+            user.setUserId(UserId);
+            if(userDao.getUserNumByEmail(userinfo.getUserEmail())!=0 )
+            {
+                throw new CustomException(403, "邮箱已经被注册");
+            }
+            else  if(userDao.getUserNumByName(userinfo.getUserName())!=0)
+            {
+                throw new CustomException(403, "用户名已经被注册");
+            }
+            userDao.UpdateUser(user);
+        }
+        catch (NullPointerException e)
+        {
+            throw new CustomException(401,"未进行过登陆操作");
+        }
+
+
+    }
     @Override
     public void sendCaptcha(String email, HttpSession session) {
         if(email==null||email.equals("")) {

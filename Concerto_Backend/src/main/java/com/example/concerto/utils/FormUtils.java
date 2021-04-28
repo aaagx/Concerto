@@ -3,6 +3,7 @@ package com.example.concerto.utils;
 import com.example.concerto.dao.UserDao;
 import com.example.concerto.exception.CustomException;
 import com.example.concerto.pojo.LoginForm;
+import com.example.concerto.pojo.Project;
 import com.example.concerto.pojo.RegisterForm;
 import org.springframework.stereotype.Component;
 
@@ -33,6 +34,20 @@ public class FormUtils {
             return false;
         }
         return true;
+
+    }
+    public static boolean checkForm(Project project) throws  CustomException
+    {
+        if (project.getProjectDescription()==null)
+        {
+            project.setProjectDescription("");
+        }
+        if (project.getProjectName() != null && !project.getProjectName().equals("")
+                && project.getProjectStartTime() != null && project.getProjectStartTime() != null
+        ) {
+            return true;
+        }
+        return false;
 
     }
 }

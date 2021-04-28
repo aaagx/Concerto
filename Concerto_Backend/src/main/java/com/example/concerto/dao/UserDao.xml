@@ -24,5 +24,24 @@
         insert into user(user_phone,user_name,user_email,user_password,user_salt,user_introducton)
          value (#{userPhone},#{userName},#{userEmail},#{userPassword},#{userSalt},#{userIntroducton})
     </insert>
+    <update id="UpdateUser" parameterType="User">
+        update user
+        set
+        <if test="userEmail != null and userEmail !=''">
+            user_email = #{userEmail},
+        </if>
+        <if test="userPhone != null and userPhone !=''">
+            user_phone = #{userPhone},
+        </if>
+        <if test="userIntroducton != null and userIntroducton !=''">
+            user_introducton = #{userIntroducton},
+        </if>
+        <if test="userName != null and userName !=''">
+            user_name = #{userName},
+        </if>
+        user_id=#{userId}
+        where user_id=#{userId};
+
+    </update>
 
 </mapper>

@@ -3,10 +3,7 @@ package com.example.concerto.controller;
 import com.example.concerto.annotation.PassToken;
 import com.example.concerto.annotation.UserLoginToken;
 import com.example.concerto.exception.CustomException;
-import com.example.concerto.pojo.LoginForm;
-import com.example.concerto.pojo.Project;
-import com.example.concerto.pojo.RegisterForm;
-import com.example.concerto.pojo.User;
+import com.example.concerto.pojo.*;
 import com.example.concerto.response.CommonResponse;
 import com.example.concerto.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +30,14 @@ public class UserController {
         CommonResponse commonResponse=new CommonResponse(200,"ok",user);
         return  commonResponse;
     }
+    @UserLoginToken
+    @GetMapping("/User/info")
+    public CommonResponse getUserInfo(HttpSession httpSession)
+    {
+        Userinfo userinfo =userService.getUserInfo(httpSession);
+        CommonResponse commonResponse=new CommonResponse(200,"ok",userinfo);
+        return  commonResponse;
+    }
 
     @PassToken
     @PostMapping("/User/Register")
@@ -40,16 +45,16 @@ public class UserController {
     {
         userService.Register(registerForm,httpSession);
 
-        CommonResponse commonResponse=new CommonResponse(200,"注册成功",null);
+        CommonResponse commonResponse=new CommonResponse(200,"注册成功","");
 
         return  commonResponse;
     }
 
     @PassToken
     @PostMapping("/User/Login")
-    public CommonResponse Login(@RequestBody LoginForm loginForm)
+    public CommonResponse Login(@RequestBody LoginForm loginForm,HttpSession httpSession)
     {
-        String token=userService.login(loginForm);
+        String token=userService.login(loginForm,httpSession);
         CommonResponse commonResponse=new CommonResponse(200,"登陆成功",token);
         return  commonResponse;
     }
@@ -58,10 +63,11 @@ public class UserController {
     @GetMapping("/User/Captcha/{email}")
     public CommonResponse getCaptcha(@PathVariable("email") String email, HttpSession httpSession)
     {
-        userService.sentCaptcha(email,httpSession);
-        CommonResponse commonResponse=new CommonResponse(200,"验证码已经成功发出",null);
+        userService.sendCaptcha(email,httpSession);
+        CommonResponse commonResponse=new CommonResponse(200,"验证码已经成功发出","");
         return  commonResponse;
     }
+
 
 
 }

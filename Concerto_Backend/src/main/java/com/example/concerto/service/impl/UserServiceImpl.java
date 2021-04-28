@@ -3,10 +3,7 @@ package com.example.concerto.service.impl;
 import com.example.concerto.dao.UserDao;
 import com.example.concerto.dao.UserTokenDao;
 import com.example.concerto.exception.CustomException;
-import com.example.concerto.pojo.LoginForm;
-import com.example.concerto.pojo.RegisterForm;
-import com.example.concerto.pojo.User;
-import com.example.concerto.pojo.UserToken;
+import com.example.concerto.pojo.*;
 import com.example.concerto.service.UserService;
 import com.example.concerto.utils.CaptchaUtils;
 import com.example.concerto.utils.FormUtils;
@@ -38,6 +35,7 @@ public class UserServiceImpl implements UserService {
 
             if (FormUtils.checkForm(registerForm)) {
                 String Captcha= (String)httpSession.getAttribute("Captcha");
+                //检查表单有效性
                 if(Captcha==null||!Captcha.equals(registerForm.getCaptcha())) {
                     throw new CustomException(403, "验证码不正确");
                 }
@@ -49,15 +47,11 @@ public class UserServiceImpl implements UserService {
                 {
                     throw new CustomException(403, "用户名已经被注册");
                 }
-                else  if(userDao.getUserNumByPhone(registerForm.getPhone())!=0)
-                {
-                    throw new CustomException(403, "手机号已经被注册");
-                }
+                //插入用户信息
                 User user = new User();
                 user.setUserName(registerForm.getName());
                 user.setUserPassword(registerForm.getPassword());
                 user.setUserEmail(registerForm.getEmail());
-                user.setUserPhone(registerForm.getPhone());
                 user.setUserSalt("001");
                 int insertId = userDao.insertUser(user);
 
@@ -68,7 +62,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public  String login(LoginForm loginForm)
+    public  String login(LoginForm loginForm, HttpSession httpSession)
     {
         if(!FormUtils.checkForm(loginForm))
         {
@@ -81,6 +75,8 @@ public class UserServiceImpl implements UserService {
         {
             throw new CustomException(403, "登录失败");
         }
+
+        //从数据库中取出所有该用户id对应的token
         List<String> tokenlist=userTokenDao.getTokenByUserId(user.getUserId());
         String token;
         if(tokenlist.isEmpty())
@@ -95,6 +91,7 @@ public class UserServiceImpl implements UserService {
         {
             token=tokenlist.get(0);
         }
+        httpSession.setAttribute("UserId",user.getUserId());
         return token;
     }
 
@@ -107,12 +104,34 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    @Override
+    public Userinfo getUserInfo(HttpSession httpSession) {
+        try {
+            long UserId = (long) httpSession.getAttribute("UserId");
+            User user=userDao.getUserById(UserId);
+            if(user==null)
+                throw new CustomException(404,"找不到对应用户");
+            Userinfo userinfo=new Userinfo();
+            userinfo.setUserId(user.getUserId());
+            userinfo.setUserEmail(user.getUserEmail());
+            userinfo.setUserName(user.getUserName());
+            userinfo.setUserPhone(user.getUserIntroducton()!=null?user.getUserIntroducton():"");
+            userinfo.setUserIntroducton(user.getUserIntroducton()!=null?user.getUserIntroducton():"");
+
+            return userinfo;
+        }
+        catch (NullPointerException e)
+        {
+            throw new CustomException(404,"未进行过登陆操作");
+        }
+    }
 
     @Override
-    public void sentCaptcha(String email, HttpSession session) {
+    public void sendCaptcha(String email, HttpSession session) {
         if(email==null||email.equals("")) {
             throw new CustomException(403,"email不能为空");
         }
+        //发送邮件
         String emailServiceCode = CaptchaUtils.randomCaptcha();
         SimpleMailMessage message = new SimpleMailMessage();
         message.setSubject("注册验证码");

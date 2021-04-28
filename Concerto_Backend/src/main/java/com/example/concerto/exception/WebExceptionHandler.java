@@ -18,7 +18,7 @@ public class WebExceptionHandler {
     @ExceptionHandler(CustomException.class)
     @ResponseBody
     public CommonResponse customerException(CustomException e) {
-        CommonResponse commonResponse=new CommonResponse(e.getCode(),e.getMessage(),null);
+        CommonResponse commonResponse=new CommonResponse(e.getCode(),e.getMessage(),"");
         return commonResponse;
     }
 
@@ -27,7 +27,7 @@ public class WebExceptionHandler {
     @ResponseBody
     public CommonResponse exception(Exception e) {
         e.printStackTrace();
-        CommonResponse commonResponse=new CommonResponse(500,"未定义异常 请联系系统管理员",null);
+        CommonResponse commonResponse=new CommonResponse(500,"未定义异常 请联系系统管理员","");
         return commonResponse;
     }
 }

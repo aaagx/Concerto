@@ -14,8 +14,7 @@ import org.springframework.stereotype.Component;
 public class FormUtils {
     public static boolean checkForm(RegisterForm registerForm) throws  CustomException
     {
-        if(registerForm.getPhone()==null || registerForm.getPhone().equals("")
-                ||registerForm.getEmail().equals("")||registerForm.getEmail()==null
+        if(registerForm.getEmail().equals("")||registerForm.getEmail()==null
                 || registerForm.getCaptcha().equals("") ||registerForm.getCaptcha()==null
                 || registerForm.getName().equals("") ||registerForm.getName()==null)
         {

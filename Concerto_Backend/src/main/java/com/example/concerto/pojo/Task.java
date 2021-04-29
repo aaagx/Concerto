@@ -15,7 +15,7 @@ public class Task {
     Long projectId;
     String taskTitle ;//标题
     Integer taskType ; //里程碑 任务 子任务
-    Integer taskPriority ;//非常紧急 紧急 普通
+    Integer taskPriority ;//0：普通\n1：有点紧急又不太紧急 \n2：紧急 \n\n
     Integer taskStatus ; //完成状态
     Date taskStartTime ;
     Date taskEndTime ;

@@ -11,6 +11,14 @@ public class Tag {
     String tagColor;
 
 
+    public Tag() {
+    }
+
+    public Tag(String tagContent, String tagColor) {
+        this.tagContent = tagContent;
+        this.tagColor = tagColor;
+    }
+
     public Long getTagId() {
         return tagId;
     }

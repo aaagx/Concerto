@@ -25,12 +25,13 @@ public class TestController {
     }
 
     @RequestMapping("param")
-    public Integer testCParam(@RequestBody Task task){
+    public Long testCParam(@RequestBody Task task){
          task.getTags().forEach(tag -> {
              System.out.println(tag.getTagId());
         });
-         return task.getTags().size();
+         return task.getTaskStartTime().getTime();
     }
+
 
     @RequestMapping("param1")
     public String testCParam1(@RequestBody String hi){

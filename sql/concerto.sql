@@ -127,7 +127,7 @@ DROP TABLE IF EXISTS `task_tag`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `task_tag` (
-  `task_tag_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `task_tag_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `task_id` bigint(20) NOT NULL,
   `tag_id` bigint(20) NOT NULL,
   PRIMARY KEY (`task_tag_id`),
@@ -164,15 +164,15 @@ DROP TABLE IF EXISTS `task_version`;
 CREATE TABLE `task_version` (
   `task_version_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `task_id` bigint(20) NOT NULL,
-  `task_version_modify_user_id` bigint(20) NOT NULL COMMENT '修改人id',
-  `task_version_modify_time` datetime NOT NULL COMMENT '修改时间',
+  `task_version_modify_user_id` bigint(20) DEFAULT NULL COMMENT '修改人id',
+  `task_version_modify_time` datetime DEFAULT NULL COMMENT '修改时间',
   `task_version_description` varchar(100) DEFAULT NULL COMMENT '提交修改的时候生成，描述任务修改信息',
   `task_version` int(11) NOT NULL DEFAULT '0' COMMENT '版本号',
   `task_title` varchar(45) NOT NULL,
   `task_type` int(11) NOT NULL DEFAULT '0' COMMENT '0：任务 \\n1：子任务 \\n2：里程碑',
-  `task_priority` int(11) NOT NULL DEFAULT '0' COMMENT '0：普通\\n1：有点紧急又不太紧急 \\n2：紧急 \\n\\n',
-  `task_start_time` date NOT NULL,
-  `task_end_time` date NOT NULL,
+  `task_priority` int(11) DEFAULT '0' COMMENT '0：普通\\n1：有点紧急又不太紧急 \\n2：紧急 \\n\\n',
+  `task_start_time` date DEFAULT NULL,
+  `task_end_time` date DEFAULT NULL,
   PRIMARY KEY (`task_version_id`),
   KEY `idx_task_id_version` (`task_id`,`task_version`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
@@ -259,7 +259,7 @@ DROP TABLE IF EXISTS `user_token`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_token` (
-  `user_token_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_token_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) NOT NULL,
   `user_token` varchar(300) NOT NULL DEFAULT '',
   `validate_date` datetime DEFAULT NULL,
@@ -277,4 +277,4 @@ CREATE TABLE `user_token` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-27 23:18:00
+-- Dump completed on 2021-04-28  8:21:51

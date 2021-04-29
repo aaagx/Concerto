@@ -1,6 +1,8 @@
 package com.example.concerto.dao;
 
+import com.example.concerto.fo.SubtaskForm;
 import com.example.concerto.pojo.Task;
+import com.example.concerto.pojo.TaskPo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -23,6 +25,15 @@ public interface TaskDao {
      * @return
      */
     Long addTask(Task task);
+
+    /**
+     * 添加任务，状态和版本设置为0
+     * 传入参数中的有效参数：projectId parentTaskId
+     * 会把taskId注入到输入的参数中，进一步进行后面task_version中的插入操作
+     * @param task
+     * @return
+     */
+    Long addTaskPo(TaskPo task);
 
     /**
      * 获取任务完成状态
@@ -68,7 +79,7 @@ public interface TaskDao {
      * 通过任务id获取子任务基本信息的列表
      * 子任务基本信息包括：task_id，标题，类型，完成状态
      * @param parentTaskId
-     * @return
+     * @return 返回类型为Task
      */
     @Select("select tv.task_id, tv.task_title, tv.task_type,  " +
             "t.task_status " +
@@ -76,4 +87,17 @@ public interface TaskDao {
             "where t.parent_task_id = #{parentTaskId}")
     List<Task> querySubtaskByTaskId(Long parentTaskId);
 
+    /**
+     * 通过任务id获取子任务基本信息的列表
+     * 子任务基本信息包括：task_id，标题，完成状态
+     * @param parentTaskId
+     * @return 返回类型为SubtaskForm
+     */
+    @Select("select " +
+            "tv.task_id, " +
+            "tv.task_title,  " +
+            "t.task_status " +
+            "from task t join task_version tv on t.task_id = tv.task_id " +
+            "where t.parent_task_id = #{parentTaskId}")
+    List<SubtaskForm> querySubtaskFormByTaskId(Long parentTaskId);
 }

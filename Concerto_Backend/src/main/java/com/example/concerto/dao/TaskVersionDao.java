@@ -3,6 +3,7 @@ package com.example.concerto.dao;
 import com.example.concerto.pojo.TaskVersion;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Update;
 
 /**
  * @author sarise
@@ -18,6 +19,15 @@ public interface TaskVersionDao {
      * @return
      */
     Long addTaskVerison(TaskVersion taskVersion);
+
+    /**
+     * 修改任务标题
+     * 注：主要是给子任务用的:D
+     * @param taskId
+     * @param taskTitle
+     */
+    @Update("update task_version set task_title = #{taskTitle} where task_id = #{taskId}")
+    void modifyTaskTitle(Long taskId,String taskTitle);
 
     /**
      * 删除某个任务，taskVersion之后的版本

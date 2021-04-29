@@ -1,6 +1,7 @@
 package com.example.concerto.dao;
 
 import com.example.concerto.pojo.User;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -24,6 +25,22 @@ public interface UserTaskDao {
      */
     @Insert("insert into user_task values(NULL,#{userId},#{taskId})")
     Long addUserTask(Long userId,Long taskId);
+
+
+    /**
+     * 通过userId taskId 删除关联
+     * @param userId
+     * @param taskId
+     */
+    @Delete("delete from user_task where user_id = #{userId} and task_id = #{taskId}")
+    void deleteUserTask(Long userId,Long taskId);
+
+    /**
+     * 删除某个任务所有参与者
+     * @param taskId
+     */
+    @Delete("delete from user_task where task_id = #{taskId}")
+    void deleteUserTaskByTaskId(Long taskId);
 
     /**
      * 获取一个任务所有的参与者信息

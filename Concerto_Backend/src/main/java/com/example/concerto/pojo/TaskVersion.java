@@ -10,16 +10,17 @@ import java.util.Date;
 public class TaskVersion {
     Long taskVersionId ;
     Long taskId ;
+
     String taskVersionDescription ; //修改描述
     Date taskVersionModifyTime ; //修改时间
     Long taskVersionModifyUserId ; //修改人ID
 
-    Integer taskVersion ;//任务版本
     String taskTitle ;//标题
     Integer taskType ; //里程碑 任务 子任务
     Integer taskPriority ;//非常紧急 紧急 普通
     Date taskStartTime ;
     Date taskEndTime ;
+    Integer taskVersion ;//任务版本
 
     public Long getTaskVersionId() {
         return taskVersionId;

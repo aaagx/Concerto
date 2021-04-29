@@ -9,4 +9,8 @@
         insert into task values (NULL,#{projectId},#{parentTaskId},0,0)
     </insert>
 
+    <insert id="addTaskPo" useGeneratedKeys="true" keyProperty="taskId">
+        insert into task values (NULL,#{projectId},#{parentTaskId},#{taskStatus},#{taskVersion})
+    </insert>
+
 </mapper>

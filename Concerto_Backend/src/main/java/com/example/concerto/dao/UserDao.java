@@ -14,8 +14,9 @@ public interface UserDao {
 
     public User getUserById(long id);
     public User getUserByEmail(String email);
-    public int insertUser(User user);
+    public long insertUser(User user);
     public int getUserNumByEmail(String email);
     public int getUserNumByName(String name);
     public int getUserNumByPhone(String phone);
+    public int UpdateUser(User user);
 }

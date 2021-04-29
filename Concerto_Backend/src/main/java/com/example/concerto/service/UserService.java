@@ -3,6 +3,9 @@ package com.example.concerto.service;
 import com.example.concerto.pojo.LoginForm;
 import com.example.concerto.pojo.RegisterForm;
 import com.example.concerto.pojo.User;
+import com.example.concerto.pojo.Userinfo;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * @ Author     ：aaagx.
@@ -12,9 +15,16 @@ import com.example.concerto.pojo.User;
 
 public interface UserService {
 
-    public void Register(RegisterForm user);
+     void Register(RegisterForm user, HttpSession httpSession);
 
-    String login(LoginForm loginForm);
+     String login(LoginForm loginForm, HttpSession httpSession);
 
-    public User getUserById(int id);
+     User getUserById(int id);
+
+     Userinfo getUserInfo(HttpSession httpSession);
+
+
+    void updateUserInfo(Userinfo userinfo, HttpSession httpSession);
+
+    void sendCaptcha(String email, HttpSession session);
 }

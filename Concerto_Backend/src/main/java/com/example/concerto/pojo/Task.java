@@ -1,5 +1,14 @@
 package com.example.concerto.pojo;
 
+import com.example.concerto.utils.DatesUtils;
+import com.example.concerto.vo.PersonnelVo;
+import com.example.concerto.vo.TaskCommentVo;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -9,27 +18,72 @@ import java.util.Set;
  * @version 1.0
  * @date 2021/4/20 下午7:20
  */
+@Slf4j
+@Builder
+@Data
+@AllArgsConstructor
 public class Task {
-    Long taskId ;
-    Long parentTaskId;
-    Long projectId;
-    String taskTitle ;//标题
-    Integer taskType ; //里程碑 任务 子任务
-    Integer taskPriority ;//0：普通\n1：有点紧急又不太紧急 \n2：紧急 \n\n
-    Integer taskStatus ; //完成状态
-    Date taskStartTime ;
-    Date taskEndTime ;
-    Integer taskVersion ;
+    /**
+     * task
+     */
+    Long taskId ;//
+    Long projectId;//
+    Long parentTaskId; //-1
+    Integer taskStatus ; //完成状态1 未完成0
+    Integer taskVersion ;//
 
+    /**
+     * TaskDao ：queryTaskBaseInfo
+     */
+    String taskTitle ;//标题
+    Integer taskType ; //2:里程碑 0:任务 1:子任务
+    Integer taskPriority ; //0：普通 1：有点紧急又不太紧急 2：紧急
+    //@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd")
+    Date taskStartTime ;//
+    //@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd")
+    Date taskEndTime ;//
+
+    int subTaskNum;  //任务总数
+    int subTaskCompletedNum;  //已完成的任务数
+    int taskDays; //任务所需天数
+
+    /**
+     * task_tag     tag
+     */
     Set<Tag> tags;
-    Set<User> participants;
+    /**
+     * user_task    user
+     */
+    Set<PersonnelVo> participants;
     List<Task> subTasks;
-    List<TaskComment> comments;
+    /**
+     * task_comment     task
+     */
+    List<TaskCommentVo> comments;
+
+
+    public Task(){}
+
+    public void setTaskDays(){
+        this.taskDays = DatesUtils.getTermDays2(this.taskStartTime, this.taskEndTime) + 1;
+    }
+
+    public void setSubTaskNum(){
+        this.subTaskNum = this.subTasks.size();
+    }
+
+    public void setSubTaskCompletedNum(){
+        int completedNum = 0;
+        for (Task task : this.subTasks) {
+            if(task.getTaskStatus() == 1){ //子任务已完成
+                completedNum++;
+            }
+        }
+        this.subTaskCompletedNum = completedNum;
+    }
 
 
     //getter and setter
-
-
     public Long getProjectId() {
         return projectId;
     }
@@ -54,19 +108,19 @@ public class Task {
         this.tags = tags;
     }
 
-    public Set<User> getParticipants() {
+    public Set<PersonnelVo> getParticipants() {
         return participants;
     }
 
-    public void setParticipants(Set<User> participants) {
+    public void setParticipants(Set<PersonnelVo> participants) {
         this.participants = participants;
     }
 
-    public List<TaskComment> getComments() {
+    public List<TaskCommentVo> getComments() {
         return comments;
     }
 
-    public void setComments(List<TaskComment> comments) {
+    public void setComments(List<TaskCommentVo> comments) {
         this.comments = comments;
     }
 

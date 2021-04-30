@@ -1,6 +1,7 @@
 package com.example.concerto.exception;
 
 import com.example.concerto.response.CommonResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 //全局异常处理器
 @ControllerAdvice
+@Slf4j
 public class WebExceptionHandler {
 
     //处理自定义异常
@@ -20,6 +22,7 @@ public class WebExceptionHandler {
     public CommonResponse customerException(CustomException e) {
         e.printStackTrace();
         CommonResponse commonResponse=new CommonResponse(e.getCode(),e.getMessage(),"");
+        log.error(e.getMessage());
         return commonResponse;
     }
 
@@ -28,7 +31,8 @@ public class WebExceptionHandler {
     @ResponseBody
     public CommonResponse exception(Exception e) {
         e.printStackTrace();
-        CommonResponse commonResponse=new CommonResponse(500,"未定义异常 请联系系统管理员", "");
+        CommonResponse commonResponse=new CommonResponse(500,"未定义异常 请联系系统管理员","");
+        log.error(e.getMessage());
         return commonResponse;
     }
 }

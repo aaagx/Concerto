@@ -1,5 +1,7 @@
 package com.example.concerto.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 /**
@@ -11,6 +13,7 @@ public class TaskComment {
     Long taskCommentId;
     Long taskId;
     String commentContent;
+    @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
     Date commentTime;
     Long taskCommentUserId;
 

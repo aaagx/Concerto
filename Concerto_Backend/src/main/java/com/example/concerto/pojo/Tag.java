@@ -2,16 +2,26 @@ package com.example.concerto.pojo;
 
 import java.util.Objects;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+
+import java.util.Objects;
+
 /**
  * @author sarise
  * @version 1.0
  * @date 2021/4/20 下午7:38
  */
+@Slf4j
+@Builder
+@Data
+@AllArgsConstructor
 public class Tag {
     Long tagId;
     String tagContent;
     String tagColor;
-
 
     @Override
     public boolean equals(Object o) {
@@ -27,6 +37,8 @@ public class Tag {
     public int hashCode() {
         return Objects.hash(tagId, tagContent, tagColor);
     }
+
+
 
     public Tag() {
     }

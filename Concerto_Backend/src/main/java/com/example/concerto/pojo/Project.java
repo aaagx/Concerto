@@ -2,6 +2,7 @@ package com.example.concerto.pojo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.NonNull;
 
 import java.util.Date;
 
@@ -11,12 +12,13 @@ import java.util.Date;
  * @date 2021/4/20 下午7:18
  */
 public class Project {
+    @NonNull
     Long projectId ;
     String projectName ;
     String projectDescription;
-
+    @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd")
     Date projectStartTime;
-
+    @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd")
     Date projectEndTime;
 
     public Long getProjectId() {

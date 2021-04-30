@@ -96,6 +96,7 @@ public interface TaskDao {
     @Select("select " +
             "tv.task_id, " +
             "tv.task_title,  " +
+            "tv.task_type," +
             "t.task_status " +
             "from task t join task_version tv on t.task_id = tv.task_id " +
             "where t.parent_task_id = #{parentTaskId}")

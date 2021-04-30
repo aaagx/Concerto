@@ -1,5 +1,7 @@
 package com.example.concerto.pojo;
 
+import java.util.Objects;
+
 /**
  * @author sarise
  * @version 1.0
@@ -14,6 +16,25 @@ public class User {
     String userSalt; //用于加密
     String userIntroducton; //用户介绍
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(userId, user.userId) &&
+                Objects.equals(userPhone, user.userPhone) &&
+                Objects.equals(userName, user.userName) &&
+                Objects.equals(userEmail, user.userEmail) &&
+                Objects.equals(userPassword, user.userPassword) &&
+                Objects.equals(userSalt, user.userSalt) &&
+                Objects.equals(userIntroducton, user.userIntroducton);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, userPhone, userName, userEmail, userPassword, userSalt, userIntroducton);
+    }
 
     public Long getUserId() {
         return userId;

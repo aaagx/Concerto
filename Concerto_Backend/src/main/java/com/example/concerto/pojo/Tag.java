@@ -1,5 +1,7 @@
 package com.example.concerto.pojo;
 
+import java.util.Objects;
+
 /**
  * @author sarise
  * @version 1.0
@@ -10,6 +12,21 @@ public class Tag {
     String tagContent;
     String tagColor;
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Tag tag = (Tag) o;
+        return Objects.equals(tagId, tag.tagId) &&
+                Objects.equals(tagContent, tag.tagContent) &&
+                Objects.equals(tagColor, tag.tagColor);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(tagId, tagContent, tagColor);
+    }
 
     public Tag() {
     }

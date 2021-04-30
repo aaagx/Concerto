@@ -19,6 +19,7 @@ public class TaskVo {
     String taskTitle ;//标题
     Integer taskPriority ;//非常紧急 紧急 普通
     Integer taskStatus ;
+    Integer taskType;
     Date taskStartTime ;
     Date taskEndTime ;
 
@@ -33,8 +34,17 @@ public class TaskVo {
         taskTitle = task.getTaskTitle();
         taskPriority = task.getTaskPriority();
         taskStatus = task.getTaskStatus();
+        taskType = task.getTaskType();
         taskStartTime = task.getTaskStartTime();
         taskEndTime = task.getTaskEndTime();
+    }
+
+    public Integer getTaskType() {
+        return taskType;
+    }
+
+    public void setTaskType(Integer taskType) {
+        this.taskType = taskType;
     }
 
     public Integer getTaskStatus() {

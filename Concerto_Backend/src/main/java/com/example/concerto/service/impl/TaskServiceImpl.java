@@ -9,6 +9,7 @@ import com.example.concerto.vo.SubtaskVo;
 import com.example.concerto.vo.TaskVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,7 @@ public class TaskServiceImpl implements TaskService {
     @Autowired
     UserTaskDao userTaskDao;
 
+    @Transactional
     @Override
     public Long createTask(AddTaskForm addTaskForm) {
         if (addTaskForm.getProjectId() == null){
@@ -89,6 +91,7 @@ public class TaskServiceImpl implements TaskService {
 
     }
 
+    @Transactional
     @Override
     public Long createMileStone(MileStoneForm mileStoneForm) {
         if (mileStoneForm.getProjectId() == null){
@@ -109,6 +112,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
 
+    @Transactional
     @Override
     public Integer modifyTask(ModifyTaskForm modifyTaskForm) {
         Long taskId = modifyTaskForm.getTaskId();
@@ -174,6 +178,7 @@ public class TaskServiceImpl implements TaskService {
         return taskVersionNum;
     }
 
+
     @Override
     public TaskVo queryTask(Long taskId) {
         TaskVo taskVo = new TaskVo();
@@ -203,6 +208,7 @@ public class TaskServiceImpl implements TaskService {
         return taskVo;
     }
 
+    @Transactional
     @Override
     public Long addSubtask(SubtaskForm subtaskForm) {
         if (subtaskForm.getParentTaskId()==null){
@@ -227,6 +233,7 @@ public class TaskServiceImpl implements TaskService {
         return task.getTaskId();
     }
 
+    @Transactional
     @Override
     public void modifySubtask(ModifySubtaskForm modifySubtaskForm) {
         Long taskId = modifySubtaskForm.getTaskId();
@@ -244,6 +251,7 @@ public class TaskServiceImpl implements TaskService {
         }
     }
 
+    @Transactional
     @Override
     public void changeTaskStatus(Long taskId) {
         Integer status = taskDao.getTaskStatus(taskId);

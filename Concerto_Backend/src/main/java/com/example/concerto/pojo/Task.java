@@ -38,9 +38,9 @@ public class Task {
     String taskTitle ;//标题
     Integer taskType ; //2:里程碑 0:任务 1:子任务
     Integer taskPriority ; //0：普通 1：有点紧急又不太紧急 2：紧急
-    @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd")
+    //@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd")
     Date taskStartTime ;//
-    @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd")
+    //@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd")
     Date taskEndTime ;//
 
     int subTaskNum;  //任务总数
@@ -65,7 +65,7 @@ public class Task {
     public Task(){}
 
     public void setTaskDays(){
-        this.taskDays = DatesUtils.getTermDays2(this.taskStartTime, this.taskEndTime);
+        this.taskDays = DatesUtils.getTermDays2(this.taskStartTime, this.taskEndTime) + 1;
     }
 
     public void setSubTaskNum(){

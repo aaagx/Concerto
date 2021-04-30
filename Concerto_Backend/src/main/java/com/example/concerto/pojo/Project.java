@@ -16,9 +16,9 @@ public class Project {
     Long projectId ;
     String projectName ;
     String projectDescription;
-    @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd")
+    //@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd")
     Date projectStartTime;
-    @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd")
+    //@JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd")
     Date projectEndTime;
 
     public Long getProjectId() {

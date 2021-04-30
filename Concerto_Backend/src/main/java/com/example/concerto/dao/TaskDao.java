@@ -82,7 +82,7 @@ public interface TaskDao {
      * @return 返回类型为Task
      */
     @Select("select tv.task_id, tv.task_title, tv.task_type,  " +
-            "t.task_status " +
+            "t.task_status, t.parent_task_id " +
             "from task t join task_version tv on t.task_id = tv.task_id " +
             "where t.parent_task_id = #{parentTaskId}")
     List<Task> querySubtaskByTaskId(Long parentTaskId);

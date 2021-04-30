@@ -1,0 +1,78 @@
+#端口号配置
+server:
+  port: 8080
+#  servlet:
+#    # 应用的访问路径
+#    context-path: /
+#    tomcat:
+#      # 存放Tomcat的日志目录
+#      basedir: C:/tomcat
+#      accesslog:
+#        # 开启日志记录
+#        enabled: true
+#        # 访问日志存放目录
+#        directory: logs
+#      # tomcat的URI编码
+#      uri-encoding: UTF-8
+
+spring:
+  #jdbc配置   （ localhost : 3306 ）
+  datasource:
+    #type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://localhost:3306/concerto2?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Etc/GMT-8
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+  #日期格式化
+  jackson:
+    date-format: yyyy-MM-dd
+    time-zone: GMT+8
+
+  #静态文件配置
+  web:
+    resources:
+      static-locations: classpath:/static,classpath:/META-INF/resources,classpath:/templates/
+
+  #邮件配置
+  #邮件发送配置
+  mail:
+    default-encoding: UTF-8
+    host: smtp.qq.com
+    username: 675452601@qq:com
+    password: erwxpiplbclfbfbc
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
+
+
+#mybatis配置
+mybatis:
+  #映射文件路径
+  mapper-locations: classpath*:*/dao/*.xml
+  #模型所在的包名
+  type-aliases-package: com.example.concerto.pojo
+  #下划线自动转化成驼峰命名
+  configuration:
+    mapUnderscoreToCamelCase: true
+
+
+mybatis-plus:
+  configuration:
+    # 关闭驼峰命名
+    #map-underscore-to-camel-case: false
+  #此处注意classpath后面要加* 表示加载多个jar下的xml
+  mapper-locations: classpath*:*/dao/*.xml
+
+
+#showSql
+logging:
+  level:
+    com.example.concerto.dao: debug
+    org:
+      mybatis: debug
+    dao: debug

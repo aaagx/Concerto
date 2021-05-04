@@ -3,7 +3,9 @@ package com.example.concerto.dao;
 import com.example.concerto.fo.SubtaskForm;
 import com.example.concerto.pojo.Task;
 import com.example.concerto.pojo.TaskPo;
+import com.example.concerto.pojo.TaskVersion;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -101,4 +103,6 @@ public interface TaskDao {
             "from task t join task_version tv on t.task_id = tv.task_id " +
             "where t.parent_task_id = #{parentTaskId}")
     List<SubtaskForm> querySubtaskFormByTaskId(Long parentTaskId);
+
+    List<Task> getTaskBaseInfoByUserId(@Param("userId") long userID);
 }

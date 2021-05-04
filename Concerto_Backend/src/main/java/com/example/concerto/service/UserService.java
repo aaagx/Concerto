@@ -1,11 +1,9 @@
 package com.example.concerto.service;
 
-import com.example.concerto.pojo.LoginForm;
-import com.example.concerto.pojo.RegisterForm;
-import com.example.concerto.pojo.User;
-import com.example.concerto.pojo.Userinfo;
+import com.example.concerto.pojo.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * @ Author     ：aaagx.
@@ -23,8 +21,14 @@ public interface UserService {
 
      Userinfo getUserInfo(HttpSession httpSession);
 
-
     void updateUserInfo(Userinfo userinfo, HttpSession httpSession);
 
     void sendCaptcha(String email, HttpSession session);
+
+    List<Message> getMessage(HttpSession session);
+
+    void setMessage(HttpSession session);
+
+    List<Task> getSchedule(HttpSession session, int type)//type 1为推荐 2为本周 3为本月 4为全部
+    ;
 }

@@ -1,5 +1,6 @@
 package com.example.concerto.controller;
 
+import com.example.concerto.annotation.UserLoginToken;
 import com.example.concerto.dao.ProjectDao;
 import com.example.concerto.pojo.Project;
 import com.example.concerto.response.CommonResponse;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * @ Author     ：aaagx.
@@ -19,7 +21,7 @@ import javax.servlet.http.HttpSession;
 public class ProjectController {
     @Autowired
     ProjectService projectService;
-
+    @UserLoginToken
     @PostMapping("/Project")
     public CommonResponse addProject(@RequestBody Project project, HttpSession httpSession)
     {
@@ -27,10 +29,19 @@ public class ProjectController {
         return  new CommonResponse(200,"成功创建项目",inviteCode);
     }
 
+    @GetMapping("/Project")
+    public CommonResponse getProject( HttpSession httpSession)
+    {
+        List<Project> projectList=projectService.getAllProject(httpSession);
+        return  new CommonResponse(200,"ok",projectList);
+    }
+    @UserLoginToken
     @PostMapping("/Project/Join/{ProjectId}")
-    public CommonResponse addProject(@PathVariable long ProjectId, HttpSession httpSession)
+    public CommonResponse joinProject(@PathVariable long ProjectId, HttpSession httpSession)
     {
         projectService.joinProject(httpSession,ProjectId);
         return  new CommonResponse(200,"成功加入项目","");
     }
+
+
 }

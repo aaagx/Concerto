@@ -13,4 +13,16 @@
         insert into task values (NULL,#{projectId},#{parentTaskId},#{taskStatus},#{taskVersion})
     </insert>
 
+    <select id="getTaskBaseInfoByUserId" >
+        select tv.task_id, tv.task_title, tv.task_type,
+               tv.task_priority,tv.task_start_time, tv.task_end_time,
+               t.task_status, t.project_id,t.task_version
+        from
+            task t left join  task_version tv on t.task_id = tv.task_id and t.task_version = tv.task_version
+        where t.task_id in
+              (
+                  select t.task_id from user_task ut left join  task t  on ut.task_id = t.task_id
+                  where user_id=#{userId}
+              );
+    </select>
 </mapper>

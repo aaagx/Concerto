@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
+import java.util.List;
 
 /**
  * @ Author     ：aaagx.
@@ -77,6 +78,21 @@ public class UserController {
         return  commonResponse;
     }
 
+    @UserLoginToken
+    @GetMapping("/User/Message")
+    public CommonResponse getMessage( HttpSession httpSession)
+    {
+        List<Message> messageList=userService.getMessage(httpSession);
+        return  new CommonResponse(200,"ok",messageList);
+    }
 
+
+    @UserLoginToken
+    @PostMapping("/User/Message")
+    public CommonResponse setMessage(HttpSession httpSession)
+    {
+        userService.setMessage(httpSession);
+        return  new CommonResponse(200,"成功将消息设置为已读","");
+    }
 
 }

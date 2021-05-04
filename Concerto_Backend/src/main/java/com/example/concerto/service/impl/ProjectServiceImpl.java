@@ -1,11 +1,16 @@
 package com.example.concerto.service.impl;
 
+import com.example.concerto.dao.MessageDao;
 import com.example.concerto.dao.ProjectDao;
+import com.example.concerto.dao.ProjectManagementDao;
 import com.example.concerto.dao.UserProjectDao;
 import com.example.concerto.exception.CustomException;
+import com.example.concerto.pojo.Message;
 import com.example.concerto.pojo.Project;
+import com.example.concerto.pojo.UserProject;
 import com.example.concerto.service.ProjectService;
 import com.example.concerto.utils.FormUtils;
+import org.apache.ibatis.binding.BindingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,10 +29,10 @@ public class ProjectServiceImpl implements ProjectService {
     ProjectDao projectDao;
     @Autowired
     UserProjectDao userProjectDao;
-    @Override
-    public List<Project> getAllProject() {
-        return null;
-    }
+    @Autowired
+    MessageDao messageDao;
+    @Autowired
+    ProjectManagementDao projectManagementDao;
 
     @Override
     public long insertProject(Project project, HttpSession httpSession) {
@@ -36,7 +41,11 @@ public class ProjectServiceImpl implements ProjectService {
                 long userId= (long) httpSession.getAttribute("UserId");
                 projectDao.insertProject(project);
                 long projectId =project.getProjectId();
-                userProjectDao.addUserProject(projectId,userId,2);
+                UserProject userProject=new UserProject();
+                userProject.setProject_id(projectId);
+                userProject.setUser_id(userId);
+                userProject.setUser_role(2);
+                userProjectDao.addUserProject(userProject);
                 return  projectId;
             }
             else
@@ -58,13 +67,43 @@ public class ProjectServiceImpl implements ProjectService {
                 {
                     throw new CustomException(401,"请勿重复加入项目");
                 }
-                userProjectDao.addUserProject(userId,projectId,0);
+
+
+                UserProject userProject=new UserProject();
+                userProject.setProject_id(projectId);
+                userProject.setUser_id(userId);
+                userProject.setUser_role(2);
+                userProjectDao.addUserProject(userProject);
+
+                //新建一个发给项目管理者的消息项目并且存入数据库
+                Message message =new Message();
+                message.setMessageStatus(0);
+                message.setMessageContent("有新用户加入项目");
+                long managerId = userProjectDao.getProjectManager(projectId);//对项目管理者发消息
+                message.setUserId(managerId);
+                messageDao.insertMessage(message);
+        }
+        catch (NullPointerException e)
+        {
+            throw  new CustomException(401,"用户未登录");
+        }
+        catch (BindingException e)
+        {
+            throw  new CustomException(400,"尝试加入一个无管理者的项目");
+        }
+    }
+
+    @Override
+    public List<Project> getAllProject(HttpSession httpSession) {
+        try {
+            long userId= (long) httpSession.getAttribute("UserId");
+            System.out.println(userId);
+            List<Project> projectList=userProjectDao.getProjectsByUser(userId);
+            return  projectList;
         }
         catch (NullPointerException e)
         {
             throw  new CustomException(401,"用户未登录");
         }
     }
-
-
 }

@@ -13,9 +13,10 @@ import java.util.List;
 
 
 public interface ProjectService {
-    public List<Project> getAllProject();
 
     long insertProject(Project project, HttpSession httpSession);
 
     void joinProject(HttpSession httpSession, long projectId);
+
+    List<Project> getAllProject(HttpSession httpSession);
 }

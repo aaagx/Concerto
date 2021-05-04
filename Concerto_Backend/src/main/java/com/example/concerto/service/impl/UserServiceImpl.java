@@ -1,5 +1,6 @@
 package com.example.concerto.service.impl;
 
+import com.example.concerto.dao.MessageDao;
 import com.example.concerto.dao.UserDao;
 import com.example.concerto.dao.UserTokenDao;
 import com.example.concerto.exception.CustomException;
@@ -28,8 +29,12 @@ public class UserServiceImpl implements UserService {
     UserDao userDao;
     @Autowired
     UserTokenDao userTokenDao;
+
     @Autowired
     JavaMailSender mailSender;
+
+    @Autowired
+    MessageDao messageDao;
 
     @Override
     public void Register(RegisterForm registerForm, HttpSession httpSession) {
@@ -163,5 +168,37 @@ public class UserServiceImpl implements UserService {
         message.setTo(email);
         mailSender.send(message);
         session.setAttribute("Captcha",emailServiceCode);
+    }
+
+    @Override
+    public List<Message> getMessage(HttpSession session) {
+        try {
+            long UserId = (long) session.getAttribute("UserId");
+            List<Message> messageList=messageDao.getMesssageByUserId(UserId);
+            return  messageList;
+        }
+        catch (NullPointerException e)
+        {
+            throw new CustomException(401,"未进行过登陆操作");
+        }
+    }
+
+    @Override
+    public void setMessage(HttpSession session){
+        try {
+            long UserId = (long) session.getAttribute("UserId");
+            messageDao.setMessage(UserId);
+        }
+        catch (NullPointerException e)
+        {
+            throw new CustomException(401,"未进行过登陆操作");
+        }
+    }
+
+    @Override
+    public List<Task> getSchedule(HttpSession session, int type)//type 1为推荐 2为本周 3为本月 4为全部
+    {
+
+        return  null;
     }
 }

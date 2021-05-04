@@ -4,6 +4,7 @@ import com.example.concerto.fo.SubtaskForm;
 import com.example.concerto.pojo.Task;
 import com.example.concerto.pojo.TaskPo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -50,7 +51,7 @@ public interface TaskDao {
      * @return
      */
     @Update("update task set task_status = #{status} where task_id = #{taskId}")
-    Integer modifyTaskStatus(Long taskId,Integer status);
+    Integer modifyTaskStatus(@Param("taskId") Long taskId,@Param("status") Integer status);
 
     /**
      * 修改任务版本号
@@ -59,7 +60,7 @@ public interface TaskDao {
      * @param taskVersion
      */
     @Update("update task set task_version = #{taskVersion} where task_id = #{taskId}")
-    void modifyTaskVersion(Long taskId,Integer taskVersion);
+    void modifyTaskVersion(@Param("taskId") Long taskId,@Param("taskVersion") Integer taskVersion);
 
 
     /**

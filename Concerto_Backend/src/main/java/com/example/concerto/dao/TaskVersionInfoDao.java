@@ -2,6 +2,7 @@ package com.example.concerto.dao;
 
 import com.example.concerto.pojo.TaskVersionInfo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public interface TaskVersionInfoDao {
      * @return
      */
     @Select("select * from task_version where task_id = #{taskId} and task_version = #{taskVersion}")
-    TaskVersionInfo queryTaskVersionInfo(Long taskId, Integer taskVersion);
+    TaskVersionInfo queryTaskVersionInfo(@Param("taskId") Long taskId, @Param("taskVersion") Integer taskVersion);
 
     /**
      * 包含任务所有的版本信息

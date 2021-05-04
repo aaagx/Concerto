@@ -4,6 +4,8 @@ import com.example.concerto.pojo.TaskPo;
 import com.example.concerto.pojo.TaskVersion;
 import com.example.concerto.pojo.User;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Set;
 
@@ -13,8 +15,11 @@ import java.util.Set;
  * @date 2021/4/27 下午8:37
  */
 public class SubtaskForm {
+    @NotNull(message = "任务版本修改者id不可为空")
     Long taskVersionModifyUserId;
+    @NotNull(message = "父任务id不可为空")
     Long parentTaskId;
+    @NotBlank(message = "任务标题不可为空")
     String taskTitle ;//标题
 
     Set<User> participants;

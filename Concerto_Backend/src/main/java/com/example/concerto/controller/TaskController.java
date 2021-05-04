@@ -8,6 +8,8 @@ import com.example.concerto.vo.TaskVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 /**
  * @author sarise
  * @version 1.0
@@ -22,7 +24,7 @@ public class TaskController {
 
     @PassToken
     @PutMapping("task")
-    public CommonResponse createTask(@RequestBody AddTaskForm addTaskForm){
+    public CommonResponse createTask(@Valid @RequestBody AddTaskForm addTaskForm){
         Long taskId = taskService.createTask(addTaskForm);
         return new CommonResponse(200,"创建任务成功",taskId);
     }
@@ -30,7 +32,7 @@ public class TaskController {
     @PassToken
     //Long createMileStone(MileStoneForm mileStoneForm);
     @PutMapping("mileStone")
-    public CommonResponse createMileStone(@RequestBody MileStoneForm mileStoneForm){
+    public CommonResponse createMileStone(@Valid @RequestBody MileStoneForm mileStoneForm){
         Long taskId = taskService.createMileStone(mileStoneForm);
         return new CommonResponse(200,"创建里程碑成功",taskId);
     }
@@ -38,7 +40,7 @@ public class TaskController {
     @PassToken
     //Integer modifyTask(ModifyTaskForm modifyTaskForm);
     @PostMapping("task")
-    public CommonResponse modifyTask(@RequestBody ModifyTaskForm modifyTaskForm){
+    public CommonResponse modifyTask(@Valid @RequestBody ModifyTaskForm modifyTaskForm){
         Integer taskVersion = taskService.modifyTask(modifyTaskForm);
         return new CommonResponse(200,"修改任务成功",taskVersion);
     }
@@ -54,7 +56,7 @@ public class TaskController {
     //Long addSubtask(SubtaskForm subtaskForm);
     @PassToken
     @PutMapping("subtask")
-    public CommonResponse addSubtask(@RequestBody SubtaskForm subtaskForm){
+    public CommonResponse addSubtask(@Valid @RequestBody SubtaskForm subtaskForm){
         Long taskId = taskService.addSubtask(subtaskForm);
         return new CommonResponse(200,"添加子任务成功",taskId);
     }
@@ -62,7 +64,7 @@ public class TaskController {
     //void modifySubtask(ModifySubtaskForm modifySubtaskForm);
     @PassToken
     @PostMapping("subtask")
-    public CommonResponse modifySubtask(@RequestBody ModifySubtaskForm modifySubtaskForm){
+    public CommonResponse modifySubtask(@Valid @RequestBody ModifySubtaskForm modifySubtaskForm){
         taskService.modifySubtask(modifySubtaskForm);
         return new CommonResponse(200,"修改子任务成功","");
     }

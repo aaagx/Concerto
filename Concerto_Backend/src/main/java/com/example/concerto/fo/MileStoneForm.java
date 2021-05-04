@@ -3,6 +3,8 @@ package com.example.concerto.fo;
 import com.example.concerto.pojo.TaskPo;
 import com.example.concerto.pojo.TaskVersion;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -11,9 +13,13 @@ import java.util.Date;
  * @date 2021/4/28 下午9:40
  */
 public class MileStoneForm {
+    @NotNull(message = "任务版本修改者id不可为空")
     Long taskVersionModifyUserId;
+    @NotNull(message = "项目id不可为空")
     Long projectId;
+    @NotBlank(message = "里程碑名不可为空")
     String taskTitle ;
+    @NotNull(message = "里程碑时间不可为空")
     Date taskStartTime ;
 
 

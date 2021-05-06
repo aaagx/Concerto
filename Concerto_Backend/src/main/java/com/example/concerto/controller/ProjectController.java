@@ -27,6 +27,15 @@ public class ProjectController {
         return  new CommonResponse(200,"成功创建项目",inviteCode);
     }
 
+    @UserLoginToken
+    @GetMapping("/Project")
+    public CommonResponse getProject( HttpSession httpSession)
+    {
+        List<Project> projectList=projectService.getAllProject(httpSession);
+        return  new CommonResponse(200,"ok",projectList);
+    }
+    
+    @UserLoginToken
     @PostMapping("/Project/Join/{ProjectId}")
     public CommonResponse addProject(@PathVariable long ProjectId, HttpSession httpSession)
     {

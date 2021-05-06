@@ -8,6 +8,7 @@ import com.example.concerto.service.ProjectService;
 import com.example.concerto.utils.FormUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -30,6 +31,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
+    @Transactional
     public long insertProject(Project project, HttpSession httpSession) {
         try {
             if(FormUtils.checkForm(project)) {

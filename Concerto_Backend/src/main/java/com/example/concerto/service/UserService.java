@@ -17,7 +17,7 @@ public interface UserService {
 
      String login(LoginForm loginForm, HttpSession httpSession);
 
-     User getUserById(int id);
+     User getUserById(long id);
 
      Userinfo getUserInfo(HttpSession httpSession);
 
@@ -29,6 +29,17 @@ public interface UserService {
 
     void setMessage(HttpSession session);
 
-    List<Task> getSchedule(HttpSession session, int type)//type 1为推荐 2为本周 3为本月 4为全部
+    List<Task> getAllSchedule(HttpSession session)
     ;
+    List<Task> getweekSchedule(HttpSession session)
+    ;
+    List<Task> getmonthSchedule(HttpSession session)
+    ;
+
+    List<Task> getWeekSchedule(HttpSession session);
+
+
+    List<Task> getRecommendSchedule(HttpSession session);
+
+    List<Task> getDaySchedule(HttpSession session);
 }

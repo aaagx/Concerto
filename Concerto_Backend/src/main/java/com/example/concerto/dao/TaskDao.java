@@ -4,6 +4,7 @@ import com.example.concerto.fo.SubtaskForm;
 import com.example.concerto.pojo.Task;
 import com.example.concerto.pojo.TaskPo;
 import com.example.concerto.pojo.TaskVersion;
+import com.example.concerto.vo.SubtaskVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -103,6 +104,17 @@ public interface TaskDao {
             "from task t join task_version tv on t.task_id = tv.task_id " +
             "where t.parent_task_id = #{parentTaskId}")
     List<SubtaskForm> querySubtaskFormByTaskId(Long parentTaskId);
+    /**
+     * 通过用户id获取任务的列表
+     * @param userId
+     * @return 返回类型为List<Task>
+     */
+    List<Task> getTasksByUserId(@Param("userId") long userId);
 
-    List<Task> getTaskBaseInfoByUserId(@Param("userId") long userID);
+    /**
+     * 通过任务id获取子任务的列表
+     * @param taskId
+     * @return 返回类型为List<SubtaskVo>
+     */
+    List<SubtaskVo> querySubtaskVoByTaskId(long taskId);
 }

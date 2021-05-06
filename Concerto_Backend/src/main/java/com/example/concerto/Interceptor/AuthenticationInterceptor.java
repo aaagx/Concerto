@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.lang.reflect.Method;
 
 /**
@@ -65,7 +66,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 }
 
                 // 获取 token 中的 user id
-                int userId=-1;
+                long userId=-1;
                 try
                 {
                     userId= TokenUtils.getIdInToken(token);
@@ -91,6 +92,8 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                     throw new CustomException(401,"toeken失效，请重新登录");
                 }
 
+                if( httpServletRequest.getSession().getAttribute("UserId")==null)
+                httpServletRequest.getSession().setAttribute("UserId",userId);
                 return true;
             }
         }

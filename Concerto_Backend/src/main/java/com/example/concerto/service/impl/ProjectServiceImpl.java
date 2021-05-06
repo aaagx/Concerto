@@ -36,7 +36,6 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public long insertProject(Project project, HttpSession httpSession) {
-        try {
             if(FormUtils.checkForm(project)) {
                 long userId= (long) httpSession.getAttribute("UserId");
                 projectDao.insertProject(project);
@@ -52,11 +51,6 @@ public class ProjectServiceImpl implements ProjectService {
             {
                 throw new CustomException(403,"用户输入信息不完整");
             }
-        }
-        catch (NullPointerException e)
-        {
-            throw  new CustomException(401,"用户未登录");
-        }
     }
     @Override
     public void joinProject(HttpSession httpSession,long projectId)
@@ -83,10 +77,6 @@ public class ProjectServiceImpl implements ProjectService {
                 message.setUserId(managerId);
                 messageDao.insertMessage(message);
         }
-        catch (NullPointerException e)
-        {
-            throw  new CustomException(401,"用户未登录");
-        }
         catch (BindingException e)
         {
             throw  new CustomException(400,"尝试加入一个无管理者的项目");
@@ -95,15 +85,10 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public List<Project> getAllProject(HttpSession httpSession) {
-        try {
             long userId= (long) httpSession.getAttribute("UserId");
             System.out.println(userId);
             List<Project> projectList=userProjectDao.getProjectsByUser(userId);
             return  projectList;
-        }
-        catch (NullPointerException e)
-        {
-            throw  new CustomException(401,"用户未登录");
-        }
+
     }
 }

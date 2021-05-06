@@ -23,12 +23,12 @@ public class ModifyTaskForm {
     Long taskId;
     @NotBlank(message = "任务标题不可为空")
     String taskTitle ;//标题
-    @NotBlank(message = "任务类型不可为空")
+    @NotNull(message = "任务类型不可为空")
     Integer taskType ; //0-任务  1-子任务  2-里程碑
     Integer taskPriority ;//非常紧急 紧急 普通
     Date taskStartTime ;
     Date taskEndTime ;
-    @NotBlank(message = "任务版本不可为空")
+    @NotNull(message = "任务版本不可为空")
     Integer taskVersion ; //前端当前版本
 
     Set<Tag> addTags;

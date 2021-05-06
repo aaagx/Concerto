@@ -17,13 +17,12 @@ import javax.validation.Valid;
  */
 
 @RestController
-@RequestMapping()
 public class TaskController {
     @Autowired
     TaskService taskService;
 
     @PassToken
-    @PutMapping("task")
+    @PutMapping(value = "/task")
     public CommonResponse createTask(@Valid @RequestBody AddTaskForm addTaskForm){
         Long taskId = taskService.createTask(addTaskForm);
         return new CommonResponse(200,"创建任务成功",taskId);
@@ -31,7 +30,7 @@ public class TaskController {
 
     @PassToken
     //Long createMileStone(MileStoneForm mileStoneForm);
-    @PutMapping("mileStone")
+    @PutMapping(value = "/mileStone")
     public CommonResponse createMileStone(@Valid @RequestBody MileStoneForm mileStoneForm){
         Long taskId = taskService.createMileStone(mileStoneForm);
         return new CommonResponse(200,"创建里程碑成功",taskId);
@@ -39,7 +38,7 @@ public class TaskController {
 
     @PassToken
     //Integer modifyTask(ModifyTaskForm modifyTaskForm);
-    @PostMapping("task")
+    @PostMapping(value = "/task")
     public CommonResponse modifyTask(@Valid @RequestBody ModifyTaskForm modifyTaskForm){
         Integer taskVersion = taskService.modifyTask(modifyTaskForm);
         return new CommonResponse(200,"修改任务成功",taskVersion);
@@ -47,7 +46,7 @@ public class TaskController {
 
     //TaskVo queryTask(Long taskId);
     @PassToken
-    @GetMapping("task/{taskId}")
+    @GetMapping(value = "/task/{taskId}")
     public CommonResponse queryTask(@PathVariable(value="taskId") Long taskId){
         TaskVo taskVo = taskService.queryTask(taskId);
         return new CommonResponse(200,"查询成功",taskVo);
@@ -55,7 +54,7 @@ public class TaskController {
 
     //Long addSubtask(SubtaskForm subtaskForm);
     @PassToken
-    @PutMapping("subtask")
+    @PutMapping(value = "/subtask")
     public CommonResponse addSubtask(@Valid @RequestBody SubtaskForm subtaskForm){
         Long taskId = taskService.addSubtask(subtaskForm);
         return new CommonResponse(200,"添加子任务成功",taskId);
@@ -63,7 +62,7 @@ public class TaskController {
 
     //void modifySubtask(ModifySubtaskForm modifySubtaskForm);
     @PassToken
-    @PostMapping("subtask")
+    @PostMapping(value = "/subtask")
     public CommonResponse modifySubtask(@Valid @RequestBody ModifySubtaskForm modifySubtaskForm){
         taskService.modifySubtask(modifySubtaskForm);
         return new CommonResponse(200,"修改子任务成功","");
@@ -71,7 +70,7 @@ public class TaskController {
 
     //void changeTaskStatus(Long taskId);
     @PassToken
-    @PostMapping("task/status/{taskId}")
+    @PostMapping(value = "/task/status/{taskId}")
     public CommonResponse changeTaskStatus(@PathVariable(value="taskId") Long taskId){
         taskService.changeTaskStatus(taskId);
         return new CommonResponse(200,"修改任务状态成功","");

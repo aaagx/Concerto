@@ -1,10 +1,7 @@
 package com.example.concerto.dao;
 
 import com.example.concerto.pojo.Tag;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 import java.util.Set;
@@ -27,7 +24,7 @@ public interface TaskTagDao {
     Long addTag(Tag tag);
 
     @Insert("insert into task_tag values (NULL,#{taskId},#{tagId})")
-    Long addTaskTag(Long taskId,Long tagId);
+    Long addTaskTag(@Param("taskId") Long taskId,@Param("tagId") Long tagId);
 
     /**
      * 通过tagId taskId 删除task_tag中的记录
@@ -35,7 +32,7 @@ public interface TaskTagDao {
      * @return
      */
     @Delete("delete from task_tag where task_id = #{taskId} and tag_id = #{tagId}")
-    Integer deleteTaskTag(Long taskId,Long tagId);
+    Integer deleteTaskTag(@Param("taskId") Long taskId,@Param("tagId") Long tagId);
 
     /**
      * 通过tagId删除tag

@@ -53,7 +53,7 @@ public interface TaskDao {
      * @return
      */
     @Update("update task set task_status = #{status} where task_id = #{taskId}")
-    Integer modifyTaskStatus(Long taskId,Integer status);
+    Integer modifyTaskStatus(@Param("taskId") Long taskId,@Param("status") Integer status);
 
     /**
      * 修改任务版本号
@@ -62,7 +62,7 @@ public interface TaskDao {
      * @param taskVersion
      */
     @Update("update task set task_version = #{taskVersion} where task_id = #{taskId}")
-    void modifyTaskVersion(Long taskId,Integer taskVersion);
+    void modifyTaskVersion(@Param("taskId") Long taskId,@Param("taskVersion") Integer taskVersion);
 
 
     /**

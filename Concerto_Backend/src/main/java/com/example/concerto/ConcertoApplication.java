@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @MapperScan({"com.example.concerto.dao"})
 @SpringBootApplication
+@EnableTransactionManagement
 public class ConcertoApplication {
 
     public static void main(String[] args) {

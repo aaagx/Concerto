@@ -2,6 +2,7 @@ package com.example.concerto.fo;
 
 import com.example.concerto.pojo.User;
 
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 /**
@@ -10,9 +11,9 @@ import java.util.Set;
  * @date 2021/4/28 下午10:25
  */
 public class ModifySubtaskForm {
+    @NotNull(message = "任务id不可为空")
     Long taskId;
     String taskTitle ;//标题
-
     Set<User> participants;
 
     public Long getTaskId() {

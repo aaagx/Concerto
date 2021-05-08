@@ -10,12 +10,14 @@ import com.example.concerto.pojo.Project;
 import com.example.concerto.pojo.UserProject;
 import com.example.concerto.service.ProjectService;
 import com.example.concerto.utils.FormUtils;
+import com.example.concerto.vo.ProjectVo;
 import org.apache.ibatis.binding.BindingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,6 +56,8 @@ public class ProjectServiceImpl implements ProjectService {
                 throw new CustomException(403,"用户输入信息不完整");
             }
     }
+
+    @Transactional
     @Override
     public void joinProject(HttpSession httpSession,long projectId)
     {
@@ -68,7 +72,7 @@ public class ProjectServiceImpl implements ProjectService {
                 UserProject userProject=new UserProject();
                 userProject.setProject_id(projectId);
                 userProject.setUser_id(userId);
-                userProject.setUser_role(2);
+                userProject.setUser_role(0);
                 userProjectDao.addUserProject(userProject);
 
                 //新建一个发给项目管理者的消息项目并且存入数据库
@@ -81,16 +85,30 @@ public class ProjectServiceImpl implements ProjectService {
         }
         catch (BindingException e)
         {
-            throw  new CustomException(400,"尝试加入一个无管理者的项目");
+            e.printStackTrace();
+            throw  new CustomException(400,"尝试加入一个无管理者的项目或者项目不存在");
         }
     }
 
     @Override
-    public List<Project> getAllProject(HttpSession httpSession) {
+    public List<ProjectVo> getAllProject(HttpSession httpSession) {
             long userId= (long) httpSession.getAttribute("UserId");
             System.out.println(userId);
             List<Project> projectList=userProjectDao.getProjectsByUser(userId);
-            return  projectList;
+            List<ProjectVo> resultList = new ArrayList<>();
+            for(Project project:projectList)
+            {
+                ProjectVo projectVo=new ProjectVo();
+                projectVo.setProjectDescription(project.getProjectDescription()==null?"":project.getProjectDescription());
+                projectVo.setProjectName(project.getProjectName());
+                projectVo.setProjectEndTime(project.getProjectEndTime());
+                projectVo.setProjectStartTime(project.getProjectStartTime());
+                projectVo.setProjectId(project.getProjectId());
+
+                projectVo.setAdmin(userProjectDao.getAdminByProject(project.getProjectId()));
+                resultList.add(projectVo );
+            }
+            return  resultList;
 
     }
 }

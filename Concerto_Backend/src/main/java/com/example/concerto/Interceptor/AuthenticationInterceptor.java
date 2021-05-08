@@ -92,7 +92,6 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                     throw new CustomException(401,"toeken失效，请重新登录");
                 }
 
-                if( httpServletRequest.getSession().getAttribute("UserId")==null)
                 httpServletRequest.getSession().setAttribute("UserId",userId);
                 return true;
             }

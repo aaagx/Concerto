@@ -6,6 +6,7 @@ import com.example.concerto.pojo.Project;
 import com.example.concerto.response.CommonResponse;
 import com.example.concerto.service.ProjectService;
 import com.example.concerto.service.UserService;
+import com.example.concerto.vo.ProjectVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +35,7 @@ public class ProjectController {
     @GetMapping("/Project")
     public CommonResponse getProject( HttpSession httpSession)
     {
-        List<Project> projectList=projectService.getAllProject(httpSession);
+        List<ProjectVo> projectList=projectService.getAllProject(httpSession);
         return  new CommonResponse(200,"ok",projectList);
     }
 

@@ -1,7 +1,13 @@
 package com.example.concerto.dao;
 
 import com.example.concerto.pojo.User;
+import com.example.concerto.vo.PersonnelVo;
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.*;
+
 
 import java.util.Set;
 
@@ -48,6 +54,10 @@ public interface UserTaskDao {
     @Select("select u.user_id, u.user_email, u.user_name, u.user_phone " +
             "from user_task ut left join user u on ut.user_id = u.user_id where ut.task_id = #{taskId}")
     Set<User> queryUserByTaskId(Long taskId);
+
+    @Select("select u.user_id, u.user_email, u.user_name " +
+            "from user_task ut left join user u on ut.user_id = u.user_id where ut.task_id = #{taskId}")
+    Set<PersonnelVo> queryPersonnelVoByTaskId(Long taskId);
 
 
 }

@@ -8,7 +8,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.server.DelegatingServerHttpResponse;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -22,7 +24,7 @@ import java.util.Set;
 @Builder
 @Data
 @AllArgsConstructor
-public class Task {
+public class Task implements  Comparable{
     /**
      * task
      */
@@ -194,5 +196,30 @@ public class Task {
 
     public void setTaskVersion(Integer taskVersion) {
         this.taskVersion = taskVersion;
+    }
+
+    public int getValue()
+    {
+        Date today=new Date();
+
+        int value=0;
+        value+=taskStatus;
+        value*=1000;
+        value-=taskPriority;
+        value*=1000;
+        value+=Math.abs(taskEndTime.compareTo(today));
+        value+=Math.abs(taskStartTime.compareTo(today));
+        return  value;
+    }
+    @Override
+    public int compareTo(Object o) {
+        if (o instanceof Task) {
+            Task inputTask = (Task) o;
+            if (this.getValue() > inputTask.getValue())
+                return 1;
+            else
+                return -1;
+        }
+        return 0;
     }
 }

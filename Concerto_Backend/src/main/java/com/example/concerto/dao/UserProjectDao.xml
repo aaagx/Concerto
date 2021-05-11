@@ -5,6 +5,14 @@
 
 <mapper namespace="com.example.concerto.dao.UserProjectDao">
 
+<select id="getProjectManager" parameterType="long" resultType="long">
+    select user_id from user_project where user_role=2 and project_id=#{projectId};
+</select>
 
-
+    <select id="getProjectsByUser" parameterType="long" resultType="Project">
+        select p.project_id,p.project_name,p.project_description,p.project_start_time,p.project_end_time  from user_project up left join project p on p.project_id=up.project_id where up.user_id=#{userid} and up.user_role!=0;
+    </select>
+<select id="getAdminByProject" parameterType="long" resultType="Userinfo">
+    select u.user_phone,u.user_name,u.user_email,u.user_introducton from user_project left join user u on user_project.user_id = u.user_id where user_project.user_role='2' and user_project.project_id=#{projectId};
+</select>
 </mapper>

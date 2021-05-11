@@ -13,4 +13,69 @@
         insert into task values (NULL,#{projectId},#{parentTaskId},#{taskStatus},#{taskVersion})
     </insert>
 
+    <select id="getTasksByUserId" resultMap="TaskMap">
+        select t.task_id, tv.task_title, tv.task_type,
+               tv.task_priority,
+               tv.task_start_time, tv.task_end_time,
+               t.task_status, t.project_id,t.task_version
+        from
+            task t left join  task_version tv on t.task_id = tv.task_id and t.task_version = tv.task_version
+        where t.task_id in
+              (
+                  select t.task_id from user_task ut left join  task t  on ut.task_id = t.task_id
+                  where user_id=#{userId}
+              )
+            and tv.task_type=0;
+    </select>
+
+    <resultMap id="TaskMap" type="Task">
+        <id column="task_id" property="taskId" />
+        <result column="task_title" property="taskTitle"  />
+        <result column="task_type" property="taskType"  />
+        <result column="task_priority" property="taskPriority"  />
+        <result column="task_start_time" property="taskStartTime"  />
+        <result column="task_end_time" property="taskEndTime"  />
+        <result column="task_status" property="taskStatus"  />
+        <result column="project_id" property="projectId"  />
+        <result column="task_version" property="taskVersion"  />
+        <collection property="tags"
+                    ofType="Tag"
+                    column="task_id"
+                    select="com.example.concerto.dao.TaskTagDao.queryTagByTaskId"
+        />
+        <collection property="participants"
+                    ofType="PersonnelVo"
+                    column="task_id"
+                    select="com.example.concerto.dao.UserTaskDao.queryPersonnelVoByTaskId"
+        />
+        <collection property="subTasks"
+                    ofType="SubtaskVo"
+                    column="task_id"
+                    select="com.example.concerto.dao.TaskDao.querySubtaskVoByTaskId"
+        />
+        <collection property="comments"
+                    ofType="TaskCommentVo"
+                    column="task_id"
+                    select="com.example.concerto.dao.TaskInfoDao.selectCommentsByTaskId"
+        />
+    </resultMap>
+
+
+    <select id="querySubtaskVoByTaskId" resultMap="subTaskMap">
+        select tv.task_id, tv.task_title, tv.task_type,t.task_status, t.parent_task_id
+            from task t join task_version tv on t.task_id = tv.task_id
+            where t.parent_task_id = #{parentTaskId}
+    </select>
+
+    <resultMap id="subTaskMap" type="com.example.concerto.vo.SubtaskVo">
+        <id column="task_id" property="taskId" />
+        <result column="task_title" property="taskTitle"  />
+        <result column="task_status" property="taskStatus"  />
+        <collection property="participants"
+                    ofType="PersonnelVo"
+                    column="task_id"
+                    select="com.example.concerto.dao.UserTaskDao.queryPersonnelVoByTaskId"
+        />
+    </resultMap>
+
 </mapper>

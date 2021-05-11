@@ -1,8 +1,15 @@
 package com.example.concerto.dao;
 
+import com.example.concerto.pojo.Project;
+import com.example.concerto.pojo.User;
+import com.example.concerto.pojo.UserProject;
+import com.example.concerto.pojo.Userinfo;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 /**
  * @ Author     ：aaagx.
@@ -12,8 +19,18 @@ import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface UserProjectDao {
-    @Insert("insert into user_project values(NULL,#{userId},#{projectId},#{userRole})")
-    Long addUserProject(Long userId,Long projectId,int userRole);
-    @Select("select count(*) from user_project where user_id=#{userId} and project_id=#{projectId} ")
-    int checkUserProject(Long userId,Long projectId);
+    @Insert("insert into user_project values(NULL,#{user_id},#{project_id},#{user_role})")
+    Long addUserProject(UserProject userProject);
+
+    @Select("select count(*) from user_project where user_id=#{userId} and project_id=#{projectId} and user_role=0")
+    int checkUserProjectRe(@Param("userId") Long userId,@Param("projectId") Long projectId);
+
+    @Select("select count(*) from user_project where user_id=#{userId} and project_id=#{projectId} and user_role in (1,2)")
+    int checkUserProjectIn(@Param("userId") Long userId,@Param("projectId") Long projectId);
+
+    long getProjectManager(Long projectId);
+
+    List<Project> getProjectsByUser(long UserId);
+
+    Userinfo getAdminByProject(long projectId);
 }

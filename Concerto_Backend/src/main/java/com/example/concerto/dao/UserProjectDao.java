@@ -22,8 +22,11 @@ public interface UserProjectDao {
     @Insert("insert into user_project values(NULL,#{user_id},#{project_id},#{user_role})")
     Long addUserProject(UserProject userProject);
 
-    @Select("select count(*) from user_project where user_id=#{userId} and project_id=#{projectId} ")
-    int checkUserProject(@Param("userId") Long userId,@Param("projectId") Long projectId);
+    @Select("select count(*) from user_project where user_id=#{userId} and project_id=#{projectId} and user_role=0")
+    int checkUserProjectRe(@Param("userId") Long userId,@Param("projectId") Long projectId);
+
+    @Select("select count(*) from user_project where user_id=#{userId} and project_id=#{projectId} and user_role in (1,2)")
+    int checkUserProjectIn(@Param("userId") Long userId,@Param("projectId") Long projectId);
 
     long getProjectManager(Long projectId);
 

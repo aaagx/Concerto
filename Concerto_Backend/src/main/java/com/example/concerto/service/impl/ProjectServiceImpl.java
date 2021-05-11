@@ -63,9 +63,13 @@ public class ProjectServiceImpl implements ProjectService {
     {
         try {
                 long userId= (long) httpSession.getAttribute("UserId");
-                if(userProjectDao.checkUserProject(userId,projectId)>0)
+                if(userProjectDao.checkUserProjectIn(userId,projectId)>0)
                 {
                     throw new CustomException(401,"请勿重复加入项目");
+                }
+                else if(userProjectDao.checkUserProjectRe(userId,projectId)>0)
+                {
+                    throw new CustomException(401,"审核中");
                 }
 
 

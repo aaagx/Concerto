@@ -1,8 +1,11 @@
 package com.example.concerto.service;
 
 import com.example.concerto.pojo.*;
+import freemarker.template.TemplateException;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -23,7 +26,7 @@ public interface UserService {
 
     void updateUserInfo(Userinfo userinfo, HttpSession httpSession);
 
-    void sendCaptcha(String email, HttpSession session);
+    void sendCaptcha(String email, HttpSession session) ;
 
     List<Message> getMessage(HttpSession session);
 
@@ -42,4 +45,6 @@ public interface UserService {
     List<Task> getRecommendSchedule(HttpSession session);
 
     List<Task> getDaySchedule(HttpSession session);
+
+    void insertAdvice(long userId, String content);
 }

@@ -1,23 +1,26 @@
 package com.example.concerto.service.impl;
 
-import com.example.concerto.dao.MessageDao;
-import com.example.concerto.dao.TaskDao;
-import com.example.concerto.dao.UserDao;
-import com.example.concerto.dao.UserTokenDao;
+import com.example.concerto.dao.*;
 import com.example.concerto.exception.CustomException;
 import com.example.concerto.pojo.*;
 import com.example.concerto.service.UserService;
 import com.example.concerto.utils.CaptchaUtils;
 import com.example.concerto.utils.FormUtils;
+import com.example.concerto.utils.MailUtils;
 import com.example.concerto.utils.TokenUtils;
+import freemarker.template.TemplateException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -33,14 +36,15 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserTokenDao userTokenDao;
 
-    @Autowired
-    JavaMailSender mailSender;
 
     @Autowired
     MessageDao messageDao;
 
     @Autowired
     TaskDao taskDao;
+
+    @Autowired
+    UserAdviceDao userAdviceDao;
 
     @Override
     public void Register(RegisterForm registerForm, HttpSession httpSession) {
@@ -150,6 +154,9 @@ public class UserServiceImpl implements UserService {
 
 
     }
+
+    @Autowired
+    MailUtils mailUtils;
     @Override
     public void sendCaptcha(String email, HttpSession session) {
         if(email==null||email.equals("")) {
@@ -157,13 +164,10 @@ public class UserServiceImpl implements UserService {
         }
         //发送邮件
         String emailServiceCode = CaptchaUtils.randomCaptcha();
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setSubject("注册验证码");
-        message.setText("注册验证码是：" + emailServiceCode);
-        message.setFrom("675452601@qq.com");
-        message.setTo(email);
-        mailSender.send(message);
         session.setAttribute("Captcha",emailServiceCode);
+        mailUtils.sendTemplateMail(email,emailServiceCode);
+
+
     }
 
     @Override
@@ -310,5 +314,13 @@ public class UserServiceImpl implements UserService {
         }
         Collections.sort(resultList);
         return  resultList;
+    }
+    @Override
+    public void insertAdvice(long userId, String content)
+    {
+        UserAdvice userAdvice=new UserAdvice();
+        userAdvice.setUserId(userId);
+        userAdvice.setAdviceContent(content);
+        userAdviceDao.insertAdvice(userAdvice);
     }
 }

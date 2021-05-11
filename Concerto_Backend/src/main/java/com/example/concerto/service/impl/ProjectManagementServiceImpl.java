@@ -85,11 +85,13 @@ public class ProjectManagementServiceImpl implements ProjectManagementService {
     public boolean updateApplicationAuth(Long projectId, Long userId, String operation) {
         int result = 0;
         if(projectId == null || userId == null){
+
             throw new CustomException(400 , "无效处理（项目/用户id缺失）");
         }
 
         if(operation.equals("true")){
-            result = projectDao.updateUserRole(projectId, userId, 0);
+            result = projectDao.updateUserRole(projectId, userId, 1
+            );
             //发消息：TODO
         } else if (operation.equals("false")){
             //删除记录

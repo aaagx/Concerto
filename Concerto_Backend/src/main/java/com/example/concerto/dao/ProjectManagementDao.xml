@@ -32,7 +32,7 @@
         from user u, user_project up
         <where>
             project_id = #{projectId}
-            and user_role in (0,1)
+            and user_role in (1,2)
             and u.user_id = up.user_id
         </where>
     </select>
@@ -43,7 +43,7 @@
         from user u, user_project up
         <where>
             project_id = #{projectId}
-            and user_role = 2
+            and user_role = 0
             and u.user_id = up.user_id
         </where>
     </select>

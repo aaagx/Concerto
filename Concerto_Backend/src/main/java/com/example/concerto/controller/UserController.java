@@ -6,11 +6,14 @@ import com.example.concerto.exception.CustomException;
 import com.example.concerto.pojo.*;
 import com.example.concerto.response.CommonResponse;
 import com.example.concerto.service.UserService;
+import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -67,7 +70,8 @@ public class UserController {
 
     @PassToken
     @GetMapping("/User/Captcha/{email}")
-    public CommonResponse getCaptcha(@PathVariable("email") String email, HttpSession httpSession) {
+    public CommonResponse getCaptcha(@PathVariable("email") String email, HttpSession httpSession)
+    {
         userService.sendCaptcha(email, httpSession);
         CommonResponse commonResponse = new CommonResponse(200, "验证码已经成功发出", "");
         return commonResponse;
@@ -120,5 +124,12 @@ public class UserController {
     public CommonResponse getDaySchedule(HttpSession httpSession) {
         List<Task> taskList = userService.getDaySchedule(httpSession);
         return new CommonResponse(200, "ok", taskList);
+    }
+    @UserLoginToken
+    @PutMapping("/User/Advice")
+    public CommonResponse getDaySchedule(@RequestParam String content,HttpSession httpSession) {
+        long userId= (long) httpSession.getAttribute("UserId");
+        userService.insertAdvice(userId,content);
+        return new CommonResponse(200, "ok", "");
     }
 }

@@ -128,6 +128,7 @@ public class UserServiceImpl implements UserService {
                 throw new CustomException(404,"找不到对应用户");
 
             Userinfo userinfo=new Userinfo();
+            userinfo.setUserId(UserId);
             BeanUtils.copyProperties(user,userinfo);
             userinfo.setUserPhone(user.getUserPhone()!=null?user.getUserPhone():"");
             userinfo.setUserIntroducton(user.getUserIntroducton()!=null?user.getUserIntroducton():"");
@@ -322,5 +323,18 @@ public class UserServiceImpl implements UserService {
         userAdvice.setUserId(userId);
         userAdvice.setAdviceContent(content);
         userAdviceDao.insertAdvice(userAdvice);
+    }
+
+    @Override
+    public Set<Tag> getTags(long userId)
+    {
+        Set<Tag> tagSet=new HashSet<>();
+        List<Task> taskList=taskDao.getTasksByUserId(userId);
+        for(Task task:taskList)
+        {
+            Set<Tag> tempTagSet=task.getTags();
+            tagSet.addAll(tempTagSet);
+        }
+        return tagSet;
     }
 }

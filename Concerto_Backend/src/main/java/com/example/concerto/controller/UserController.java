@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @ Author     ：aaagx.
@@ -124,6 +125,13 @@ public class UserController {
     public CommonResponse getDaySchedule(HttpSession httpSession) {
         List<Task> taskList = userService.getDaySchedule(httpSession);
         return new CommonResponse(200, "ok", taskList);
+    }
+    @UserLoginToken
+    @GetMapping("/User/Schedule/Tag")
+    public CommonResponse getScheduleTag(HttpSession httpSession) {
+        long userId= (long) httpSession.getAttribute("UserId");
+        Set<Tag> tagSet=userService.getTags(userId);
+        return new CommonResponse(200, "ok", tagSet);
     }
     @UserLoginToken
     @PutMapping("/User/Advice")

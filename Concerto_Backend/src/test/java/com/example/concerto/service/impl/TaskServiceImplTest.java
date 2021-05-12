@@ -1,7 +1,9 @@
 package com.example.concerto.service.impl;
 
+import com.example.concerto.dao.TaskDao;
 import com.example.concerto.fo.*;
 import com.example.concerto.pojo.Tag;
+import com.example.concerto.pojo.Task;
 import com.example.concerto.pojo.User;
 import com.example.concerto.service.TaskService;
 import com.example.concerto.util.Factory;
@@ -167,5 +169,20 @@ public class TaskServiceImplTest {
     public void changeTaskStatus() {
         taskService.changeTaskStatus(23L);
         //taskService.changeTaskStatus(15L);
+    }
+
+    @Autowired
+    TaskDao taskDao;
+    @Test
+    public void tagTest()
+    {
+        Set<Tag> tagSet=new HashSet<>();
+        List<Task> taskList=taskDao.getTasksByUserId(8);
+        for(Task task:taskList)
+        {
+            Set<Tag> tempTagSet=task.getTags();
+            tagSet.addAll(tempTagSet);
+        }
+    return;
     }
 }

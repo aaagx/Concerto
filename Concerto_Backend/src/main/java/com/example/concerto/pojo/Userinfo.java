@@ -11,7 +11,15 @@ public class Userinfo {
     String userName;
     String userEmail;
     String userIntroducton; //用户介绍
+    long userId;
 
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
 
     public String getUserPhone() {
         return userPhone;

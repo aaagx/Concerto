@@ -35,8 +35,6 @@ public interface UserService {
 
     List<Task> getAllSchedule(HttpSession session)
     ;
-    List<Task> getweekSchedule(HttpSession session)
-    ;
     List<Task> getmonthSchedule(HttpSession session)
     ;
 

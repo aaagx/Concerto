@@ -1,11 +1,13 @@
 package com.example.concerto.service;
 
 import com.example.concerto.pojo.Project;
+import com.example.concerto.pojo.Tag;
 import com.example.concerto.pojo.Task;
 import com.example.concerto.vo.PersonnelVo;
 
 import java.text.ParseException;
 import java.util.List;
+import java.util.Set;
 
 /**
  * ProjectManagementService
@@ -58,4 +60,6 @@ public interface ProjectManagementService {
      * @return
      */
     List<Task> getProjectWeekTask(Long projectId) throws ParseException;
+
+    Set<Tag> getProjectAllTag(Long projectId) throws ParseException;
 }

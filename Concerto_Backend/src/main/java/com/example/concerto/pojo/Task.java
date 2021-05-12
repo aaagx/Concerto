@@ -17,7 +17,7 @@ import java.util.Set;
 
 /**
  * @author sarise
- * @version 1.0
+ * @version 2.0
  * @date 2021/4/20 下午7:20
  */
 @Slf4j
@@ -48,6 +48,7 @@ public class Task implements  Comparable{
     int subTaskNum;  //任务总数
     int subTaskCompletedNum;  //已完成的任务数
     int taskDays; //任务所需天数
+    int remainingDays; //任务剩余天数
 
     /**
      * task_tag     tag
@@ -68,6 +69,10 @@ public class Task implements  Comparable{
 
     public void setTaskDays(){
         this.taskDays = DatesUtils.getTermDays2(this.taskStartTime, this.taskEndTime) + 1;
+    }
+
+    public void setRemainingDays(){
+        this.remainingDays = DatesUtils.getTermDays2(new Date(), this.taskEndTime) + 1;
     }
 
     public void setSubTaskNum(){
@@ -205,10 +210,16 @@ public class Task implements  Comparable{
         int value=0;
         value+=taskStatus;
         value*=1000;
-        value-=taskPriority;
+        if(taskPriority != null){
+            value-=taskPriority;
+        }
         value*=1000;
-        value+=Math.abs(taskEndTime.compareTo(today));
-        value+=Math.abs(taskStartTime.compareTo(today));
+        if(taskEndTime != null){
+            value+=Math.abs(taskEndTime.compareTo(today));
+        }
+        if(taskStartTime != null){
+            value+=Math.abs(taskStartTime.compareTo(today));
+        }
         return  value;
     }
     @Override

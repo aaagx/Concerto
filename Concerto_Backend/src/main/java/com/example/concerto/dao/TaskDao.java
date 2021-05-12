@@ -3,7 +3,10 @@ package com.example.concerto.dao;
 import com.example.concerto.fo.SubtaskForm;
 import com.example.concerto.pojo.Task;
 import com.example.concerto.pojo.TaskPo;
+import com.example.concerto.pojo.TaskVersion;
+import com.example.concerto.vo.SubtaskVo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -50,7 +53,7 @@ public interface TaskDao {
      * @return
      */
     @Update("update task set task_status = #{status} where task_id = #{taskId}")
-    Integer modifyTaskStatus(Long taskId,Integer status);
+    Integer modifyTaskStatus(@Param("taskId") Long taskId,@Param("status") Integer status);
 
     /**
      * 修改任务版本号
@@ -59,7 +62,7 @@ public interface TaskDao {
      * @param taskVersion
      */
     @Update("update task set task_version = #{taskVersion} where task_id = #{taskId}")
-    void modifyTaskVersion(Long taskId,Integer taskVersion);
+    void modifyTaskVersion(@Param("taskId") Long taskId,@Param("taskVersion") Integer taskVersion);
 
 
     /**
@@ -101,4 +104,17 @@ public interface TaskDao {
             "from task t join task_version tv on t.task_id = tv.task_id " +
             "where t.parent_task_id = #{parentTaskId}")
     List<SubtaskForm> querySubtaskFormByTaskId(Long parentTaskId);
+    /**
+     * 通过用户id获取任务的列表
+     * @param userId
+     * @return 返回类型为List<Task>
+     */
+    List<Task> getTasksByUserId(@Param("userId") long userId);
+
+    /**
+     * 通过任务id获取子任务的列表
+     * @param taskId
+     * @return 返回类型为List<SubtaskVo>
+     */
+    List<SubtaskVo> querySubtaskVoByTaskId(long taskId);
 }

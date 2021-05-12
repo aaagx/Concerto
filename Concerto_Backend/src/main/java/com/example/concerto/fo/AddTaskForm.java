@@ -1,7 +1,12 @@
 package com.example.concerto.fo;
 
-import com.example.concerto.pojo.*;
+import com.example.concerto.pojo.Tag;
+import com.example.concerto.pojo.TaskPo;
+import com.example.concerto.pojo.TaskVersion;
+import com.example.concerto.pojo.User;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -12,11 +17,16 @@ import java.util.Set;
  * @date 2021/4/28 上午9:32
  */
 public class AddTaskForm {
+    @NotNull(message = "任务版本修改者id不可为空")
     Long taskVersionModifyUserId;
+    @NotNull(message = "项目id不可为空")
     Long projectId;
+    @NotBlank(message = "任务标题不可为空")
     String taskTitle ;//标题
     Integer taskPriority ;//非常紧急 紧急 普通
+    @NotNull(message = "任务开始时间不可为空")
     Date taskStartTime ;
+    @NotNull(message = "任务结束时间不可为空")
     Date taskEndTime ;
 
     Set<Tag> tags;

@@ -1,10 +1,13 @@
 package com.example.concerto.dao;
 
 import com.example.concerto.pojo.User;
+import com.example.concerto.vo.PersonnelVo;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
+
 
 import java.util.Set;
 
@@ -24,7 +27,7 @@ public interface UserTaskDao {
      * @return
      */
     @Insert("insert into user_task values(NULL,#{userId},#{taskId})")
-    Long addUserTask(Long userId,Long taskId);
+    Long addUserTask(@Param("userId") Long userId,@Param("taskId") Long taskId);
 
 
     /**
@@ -33,7 +36,7 @@ public interface UserTaskDao {
      * @param taskId
      */
     @Delete("delete from user_task where user_id = #{userId} and task_id = #{taskId}")
-    void deleteUserTask(Long userId,Long taskId);
+    void deleteUserTask(@Param("userId") Long userId,@Param("taskId") Long taskId);
 
     /**
      * 删除某个任务所有参与者
@@ -51,6 +54,10 @@ public interface UserTaskDao {
     @Select("select u.user_id, u.user_email, u.user_name, u.user_phone " +
             "from user_task ut left join user u on ut.user_id = u.user_id where ut.task_id = #{taskId}")
     Set<User> queryUserByTaskId(Long taskId);
+
+    @Select("select u.user_id, u.user_email, u.user_name " +
+            "from user_task ut left join user u on ut.user_id = u.user_id where ut.task_id = #{taskId}")
+    Set<PersonnelVo> queryPersonnelVoByTaskId(Long taskId);
 
 
 }

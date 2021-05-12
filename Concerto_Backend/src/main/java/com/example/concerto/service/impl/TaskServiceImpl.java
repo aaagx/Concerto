@@ -40,9 +40,6 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     @Override
     public Long createTask(AddTaskForm addTaskForm) {
-        if (addTaskForm.getProjectId() == null){
-            throw new CustomException(400,"项目id不可为空");
-        }
         //通过taskForm获取相应的用于初始化的实体类型
         TaskPo initTask = addTaskForm.getTaskPo();
         TaskVersion initTaskVersion = addTaskForm.getTaskVersionObj();
@@ -94,9 +91,6 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     @Override
     public Long createMileStone(MileStoneForm mileStoneForm) {
-        if (mileStoneForm.getProjectId() == null){
-            throw new CustomException(400,"项目id不可为空");
-        }
         //通过MileStoneForm获取相应的用于初始化的实体类型
         TaskPo initTask = mileStoneForm.getTaskPo();
         TaskVersion initTaskVersion = mileStoneForm.getTaskVersionObj();
@@ -118,6 +112,11 @@ public class TaskServiceImpl implements TaskService {
         Long taskId = modifyTaskForm.getTaskId();
         //版本比对
         Task task = taskDao.queryTaskBaseInfo(taskId);
+
+        if (task == null){
+            throw new CustomException(400,"任务查询失败");
+        }
+
         Integer taskVersionNum = task.getTaskVersion();
         //前端发送的版本参数即当前数据库中的版本，若不相同说明版本已经被更新
         if (taskVersionNum != modifyTaskForm.getTaskVersion()){

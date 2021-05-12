@@ -3,6 +3,7 @@ package com.example.concerto.dao;
 import com.example.concerto.pojo.TaskVersion;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
 
 /**
@@ -27,7 +28,7 @@ public interface TaskVersionDao {
      * @param taskTitle
      */
     @Update("update task_version set task_title = #{taskTitle} where task_id = #{taskId}")
-    void modifyTaskTitle(Long taskId,String taskTitle);
+    void modifyTaskTitle(@Param("taskId") Long taskId,@Param("taskTitle") String taskTitle);
 
     /**
      * 删除某个任务，taskVersion之后的版本
@@ -36,7 +37,7 @@ public interface TaskVersionDao {
      * @return
      */
     @Delete("delete from task_version where task_id = #{taskId} and task_version > #{taskVersion}")
-    Integer deleteTaskVersionAfter(Long taskId,Integer taskVersion);
+    Integer deleteTaskVersionAfter(@Param("taskId") Long taskId,@Param("taskVersion") Integer taskVersion);
 
     /**
      * 删除任务的某个版本信息
@@ -45,5 +46,5 @@ public interface TaskVersionDao {
      * @return
      */
     @Delete("delete from task_version where task_id = #{taskId} and task_version = #{taskVersion}")
-    Integer deleteTaskVersion(Long taskId,Integer taskVersion);
+    Integer deleteTaskVersion(@Param("taskId") Long taskId,@Param("taskVersion") Integer taskVersion);
 }

@@ -1,11 +1,12 @@
 package com.example.concerto.service;
 
-import com.example.concerto.pojo.LoginForm;
-import com.example.concerto.pojo.RegisterForm;
-import com.example.concerto.pojo.User;
-import com.example.concerto.pojo.Userinfo;
+import com.example.concerto.pojo.*;
+import freemarker.template.TemplateException;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * @ Author     ：aaagx.
@@ -19,12 +20,31 @@ public interface UserService {
 
      String login(LoginForm loginForm, HttpSession httpSession);
 
-     User getUserById(int id);
+     User getUserById(long id);
 
      Userinfo getUserInfo(HttpSession httpSession);
 
-
     void updateUserInfo(Userinfo userinfo, HttpSession httpSession);
 
-    void sendCaptcha(String email, HttpSession session);
+    void sendCaptcha(String email, HttpSession session) ;
+
+    List<Message> getMessage(HttpSession session);
+
+    void setMessage(HttpSession session);
+
+    List<Task> getAllSchedule(HttpSession session)
+    ;
+    List<Task> getweekSchedule(HttpSession session)
+    ;
+    List<Task> getmonthSchedule(HttpSession session)
+    ;
+
+    List<Task> getWeekSchedule(HttpSession session);
+
+
+    List<Task> getRecommendSchedule(HttpSession session);
+
+    List<Task> getDaySchedule(HttpSession session);
+
+    void insertAdvice(long userId, String content);
 }

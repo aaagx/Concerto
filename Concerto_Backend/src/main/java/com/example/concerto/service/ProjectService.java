@@ -1,6 +1,7 @@
 package com.example.concerto.service;
 
 import com.example.concerto.pojo.Project;
+import com.example.concerto.vo.ProjectVo;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -13,9 +14,10 @@ import java.util.List;
 
 
 public interface ProjectService {
-    public List<Project> getAllProject();
 
     long insertProject(Project project, HttpSession httpSession);
 
     void joinProject(HttpSession httpSession, long projectId);
+
+    List<ProjectVo> getAllProject(HttpSession httpSession);
 }

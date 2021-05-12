@@ -2,6 +2,7 @@ package com.example.concerto.controller;
 
 import com.example.concerto.exception.CustomException;
 import com.example.concerto.pojo.Project;
+import com.example.concerto.pojo.Tag;
 import com.example.concerto.pojo.Task;
 import com.example.concerto.response.CommonResponse;
 import com.example.concerto.service.ProjectManagementService;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.util.List;
+import java.util.Set;
 
 /**
  * ProjectController
@@ -102,7 +104,7 @@ public class ProjectController2 {
     @GetMapping("/task/all")
     public CommonResponse getProjectAllTask(Long projectId) {
         List<Task> taskList = projectManagementService.getProjectAllTask(projectId);
-        if(taskList.equals(null)){
+        if(taskList == null || taskList.size() == 0){
             return new CommonResponse(200 , "该项目还没有任务！" , "");
         }
         return new CommonResponse(200 , "获取全部任务成功！" , taskList);
@@ -117,10 +119,25 @@ public class ProjectController2 {
     @GetMapping("/task/week")
     public CommonResponse getProjectWeekTask(Long projectId) throws ParseException {
         List<Task> taskList = projectManagementService.getProjectWeekTask(projectId);
-        if(taskList.equals(null) || taskList.size() == 0){
+        if(taskList == null || taskList.size() == 0){
             return new CommonResponse(200 , "该项目本周还没有任务！" , "");
         }
         return new CommonResponse(200 , "获取本周任务成功！" , taskList);
+    }
+
+    /**
+     * 获取项目的所有tag
+     * @param projectId
+     * @return
+     * @throws ParseException
+     */
+    @GetMapping("/tag")
+    public CommonResponse getProjectAllTag(Long projectId) throws ParseException {
+        Set<Tag> projectTagSet  = projectManagementService.getProjectAllTag(projectId);
+        if(projectTagSet == null || projectTagSet.size() == 0){
+            return new CommonResponse(200 , "该项目本周因为还没有任务，所以也没有tag！" , "");
+        }
+        return new CommonResponse(200 , "获取任务的所有tag成功！" , projectTagSet);
     }
 
 }

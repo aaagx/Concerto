@@ -55,6 +55,7 @@ public class MailUtils {
         } catch (MessagingException e) {
             e.printStackTrace();
             throw new CustomException(500,"邮件发送失败");
+
         }
 
     }

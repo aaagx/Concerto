@@ -25,6 +25,14 @@ public interface TaskVersionInfoDao {
      */
     @Select("select * from task_version where task_id = #{taskId} and task_version = #{taskVersion}")
     TaskVersionInfo queryTaskVersionInfo(@Param("taskId") Long taskId, @Param("taskVersion") Integer taskVersion);
+    /**
+     * 获取任务所有版本的版本信息
+     * 包括：任务ID 任务版本 修改描述 修改时间 修改人ID
+     * @param taskId
+     * @return
+     */
+    @Select("select * from task_version where task_id = #{taskId} ")
+    List<TaskVersionInfo> queryAllTaskVersionInfo(@Param("taskId") Long taskId);
 
     /**
      * 包含任务所有的版本信息

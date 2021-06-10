@@ -191,7 +191,9 @@ public class UserServiceImpl implements UserService {
             for(Task task:taskList)
             {
                 task.setTaskDays(DatesUtils.getTermDays2(today,task.getTaskEndTime()));
-                task.setSubTaskNum(task.getSubTasks().size());
+                if(task.getSubTasks()!=null) {
+                    task.setSubTaskNum(task.getSubTasks().size());
+                }
             }
             return  taskList;
 

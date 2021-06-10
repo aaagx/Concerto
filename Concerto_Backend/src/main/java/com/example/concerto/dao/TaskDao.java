@@ -76,7 +76,7 @@ public interface TaskDao {
             "t.task_status, t.project_id,t.task_version " +
             "from task t join task_version tv on t.task_id = tv.task_id " +
             "where t.task_id = #{taskId} and t.task_version = tv.task_version ")
-    Task queryTaskBaseInfo(Long taskId);
+    Task  queryTaskBaseInfo(Long taskId);
 
     /**
      * 通过任务id获取子任务基本信息的列表

@@ -47,8 +47,7 @@ public class Task implements  Comparable{
 
     int subTaskNum;  //任务总数
     int subTaskCompletedNum;  //已完成的任务数
-    int taskDays; //任务所需天数
-    int remainingDays; //任务剩余天数
+    int taskDays; //任务剩余天数
 
     /**
      * task_tag     tag
@@ -68,11 +67,7 @@ public class Task implements  Comparable{
     public Task(){}
 
     public void setTaskDays(){
-        this.taskDays = DatesUtils.getTermDays2(this.taskStartTime, this.taskEndTime) + 1;
-    }
-
-    public void setRemainingDays(){
-        this.remainingDays = DatesUtils.getTermDays2(new Date(), this.taskEndTime) + 1;
+        this.taskDays = DatesUtils.getTermDays2(new Date(), this.taskEndTime) ;
     }
 
     public void setSubTaskNum(){

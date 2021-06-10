@@ -134,12 +134,9 @@ public class ProjectManagementServiceImpl implements ProjectManagementService {
                 tempTask.setSubTaskNum();
                 //设置已完成子任务数
                 tempTask.setSubTaskCompletedNum();
-                //设置任务所需天数
-                tempTask.setTaskDays();
-                //设置任务剩余天数
-                tempTask.setRemainingDays();
             }
-
+            //设置任务所需天数
+            tempTask.setTaskDays();
             //获取任务的 tagSet
             tempTask.setTags(taskInfoDao.selectTagsByTaskId(taskId));
             //获取任务的 参与者Set
@@ -190,12 +187,9 @@ public class ProjectManagementServiceImpl implements ProjectManagementService {
                 tempTask.setSubTaskNum();
                 //设置已完成子任务数
                 tempTask.setSubTaskCompletedNum();
-                //设置任务所需天数
-                tempTask.setTaskDays();
-                //设置任务剩余天数
-                tempTask.setRemainingDays();
             }
-
+            //设置任务所需天数
+            tempTask.setTaskDays();
             //获取任务的 tagSet
             tempTask.setTags(taskInfoDao.selectTagsByTaskId(taskId));
             //获取任务的 参与者Set

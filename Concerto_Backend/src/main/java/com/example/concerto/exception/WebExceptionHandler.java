@@ -79,6 +79,12 @@ public class WebExceptionHandler {
         return commonResponse;
     }
 
+    @ExceptionHandler(NullPointerException.class)
+    @ResponseBody
+    public void customerException(NullPointerException e) {
+        System.out.println("handle the excpetion");
+    }
+
     //处理未能捕获（遗漏的）异常
     @ExceptionHandler(Exception.class)
     @ResponseBody

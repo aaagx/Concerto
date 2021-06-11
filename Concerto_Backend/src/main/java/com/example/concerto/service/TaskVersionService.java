@@ -13,5 +13,5 @@ import java.util.List;
 
 public interface TaskVersionService {
     public List<TaskVersionInfoVo> getTaskVersionInfo(long taskId);
-    public void rollbackVersion(long taskId,long taskversionId);
+    public void rollbackVersion(long taskId,int taskversionId);
 }

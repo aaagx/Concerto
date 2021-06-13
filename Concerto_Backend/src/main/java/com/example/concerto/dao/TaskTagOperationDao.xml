@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.concerto.dao.TaskTagOperationDao">
+
+    <insert id="addOpertaion" parameterType="TaskTagOperation" useGeneratedKeys="true" keyProperty="task_tag_operation_id">
+        insert into task_tag_operation(task_tag_operation_id, task_id, tag_id, task_operation_type, task_version) values (NULL,#{taskId},#{tagId},#{taskOperationType},#{taskVersion})
+    </insert>
+    <delete id="deleteRollBackOperation" >
+        delete from task_tag_operation where task_id=#{taskId} and task_version>#{taskVersion}
+    </delete>
+    <select id="getRollBackOperations" resultType="TaskTagOperation">
+        select * from task_tag_operation where task_id=#{taskId} and task_version>#{taskVersion} order by task_version DESC
+    </select>
+
+</mapper>

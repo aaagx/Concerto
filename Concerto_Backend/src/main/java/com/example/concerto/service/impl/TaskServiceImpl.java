@@ -37,6 +37,10 @@ public class TaskServiceImpl implements TaskService {
     @Autowired
     UserTaskDao userTaskDao;
 
+    @Autowired
+
+    TaskTagOperationDao taskTagOperationDao;
+
     @Transactional
     @Override
     public Long createTask(AddTaskForm addTaskForm) {
@@ -63,6 +67,7 @@ public class TaskServiceImpl implements TaskService {
                     tagDao.addTag(tag);
                     taskTagDao.addTaskTag(initTask.getTaskId(), tag.getTagId());
                 }
+                insertTagOperatin(initTask.getTaskId(),initTaskVersion.getTaskVersion(),1,tag.getTagId());
             }
         }
 
@@ -145,6 +150,8 @@ public class TaskServiceImpl implements TaskService {
                     tagDao.addTag(tag);
                     taskTagDao.addTaskTag(taskId, tag.getTagId());
                 }
+                //记录这条操作
+                insertTagOperatin(task.getTaskId(),newTaskVersion.getTaskVersion(),1,tag.getTagId());
             }
         }
 
@@ -155,8 +162,13 @@ public class TaskServiceImpl implements TaskService {
                 //查找tagId
                 Tag tagInSql = tagDao.queryTag(tag);
                 //删除关联
-                taskTagDao.deleteTaskTag(taskId, tagInSql.getTagId());
-            }
+                int ifSuccess =taskTagDao.deleteTaskTag(taskId, tagInSql.getTagId());
+                //记录这条操作
+                if(ifSuccess!=0)
+                    {
+                    insertTagOperatin(task.getTaskId(), newTaskVersion.getTaskVersion(), -1, tagInSql.getTagId());
+                    }
+                }
         }
 
         //新增参与者
@@ -259,5 +271,20 @@ public class TaskServiceImpl implements TaskService {
         }else {
             taskDao.modifyTaskStatus(taskId,0);
         }
+    }
+
+    @Transactional
+    @Override
+    public void insertTagOperatin(Long taskId,
+                                  Integer taskVersion,
+                                  Integer taskOperationType ,//1增加 -1删除
+                                   Long tagId)
+    {
+        TaskTagOperation taskTagOperation=new TaskTagOperation();
+        taskTagOperation.setTaskVersion(taskVersion);
+        taskTagOperation.setTagId(tagId);
+        taskTagOperation.setTaskOperationType(taskOperationType);
+        taskTagOperation.setTaskId(taskId);
+        taskTagOperationDao.addOpertaion(taskTagOperation);
     }
 }

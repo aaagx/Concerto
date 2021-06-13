@@ -1,10 +1,8 @@
 package com.example.concerto.service.impl;
 
-import com.example.concerto.dao.TaskDao;
-import com.example.concerto.dao.TaskVersionDao;
-import com.example.concerto.dao.TaskVersionInfoDao;
-import com.example.concerto.dao.UserDao;
+import com.example.concerto.dao.*;
 import com.example.concerto.exception.CustomException;
+import com.example.concerto.pojo.TaskTagOperation;
 import com.example.concerto.pojo.TaskVersionInfo;
 import com.example.concerto.pojo.User;
 import com.example.concerto.service.TaskVersionService;
@@ -33,6 +31,11 @@ public class TaskVersionServiceImpl implements TaskVersionService {
     UserDao userDao;
     @Autowired
     TaskDao taskDao;
+    @Autowired
+    TaskTagOperationDao taskTagOperationDao;
+    @Autowired
+    TaskTagDao taskTagDao;
+
     @Override
     public List<TaskVersionInfoVo> getTaskVersionInfo(long taskId) {
         List<TaskVersionInfo> taskVersionInfoList = taskVersionInfoDao.queryAllTaskVersionInfo(taskId);
@@ -60,6 +63,22 @@ public class TaskVersionServiceImpl implements TaskVersionService {
         {
             taskDao.modifyTaskVersion(taskId,taskversion);
             taskVersionDao.deleteTaskVersionAfter(taskId,taskversion);
+            List<TaskTagOperation> rollBackOperations = taskTagOperationDao.getRollBackOperations(taskId,taskversion);
+            if(!rollBackOperations.isEmpty())
+            {
+                for(TaskTagOperation taskTagOperation:rollBackOperations)
+                {
+                    if(taskTagOperation.getTaskOperationType()==1)
+                    {
+                        taskTagDao.deleteTaskTag(taskTagOperation.getTaskId(),taskTagOperation.getTagId());
+                    }
+                    else
+                    {
+                        taskTagDao.addTaskTag(taskTagOperation.getTaskId(),taskTagOperation.getTagId());
+                    }
+                }
+            }
+            taskTagOperationDao.deleteRollBackOperation(taskId,taskversion);
         }
         else
         {

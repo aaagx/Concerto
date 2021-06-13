@@ -2,6 +2,7 @@ package com.example.concerto.service;
 
 import com.example.concerto.fo.*;
 import com.example.concerto.vo.TaskVo;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @author sarise
@@ -16,4 +17,8 @@ public interface TaskService {
     Long addSubtask(SubtaskForm subtaskForm);
     void modifySubtask(ModifySubtaskForm modifySubtaskForm);
     void changeTaskStatus(Long taskId);
+    void insertTagOperatin(Long taskId,
+                           Integer taskVersion,
+                           Integer taskOperationType,//1增加 -1删除
+                           Long tagId);
 }

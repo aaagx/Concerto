@@ -8,7 +8,7 @@ package com.example.concerto.pojo;
 public class TaskTagOperation {
     Long TaskTagOperationId ;
     Long taskId ;
-    Long taskVersion ;
+    Integer taskVersion ;
     Integer taskOperationType ;//1增加 -1删除
     Long tagId;
 
@@ -28,11 +28,11 @@ public class TaskTagOperation {
         this.taskId = taskId;
     }
 
-    public Long getTaskVersion() {
+    public Integer getTaskVersion() {
         return taskVersion;
     }
 
-    public void setTaskVersion(Long taskVersion) {
+    public void setTaskVersion(Integer taskVersion) {
         this.taskVersion = taskVersion;
     }
 
